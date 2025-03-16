@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏世界 - 探索无限可能</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #00cec9;
+            --accent-color: #fd79a8;
+            --dark-color: #2d3436;
+            --light-color: #dfe6e9;
+            --gradient-primary: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            --gradient-secondary: linear-gradient(135deg, #00cec9, #81ecec);
+            --gradient-accent: linear-gradient(135deg, #fd79a8, #fab1a0);
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+            color: var(--dark-color);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+        
+        header.scrolled {
+            padding: 5px 0;
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
+        
+        .logo-icon {
+            margin-right: 12px;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 40px;
+        }
+        
+        .nav-links a {
+            color: var(--dark-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 8px 0;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--gradient-primary);
+            transition: width 0.4s ease;
+            border-radius: 2px;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* 英雄区域样式 */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(108, 92, 231, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%);
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 25px;
+            animation: fadeInUp 1.2s ease;
+            text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.5);
+            letter-spacing: 2px;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.6rem;
+            margin-bottom: 50px;
+            animation: fadeInUp 1.2s ease 0.3s;
+            animation-fill-mode: both;
+            text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 16px 45px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.3);
+            animation: fadeInUp 1.2s ease 0.6s;
+            animation-fill-mode: both;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: var(--gradient-secondary);
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(108, 92, 231, 0.4);
+        }
+        
+        .btn:hover::before {
+            width: 100%;
+        }
+        
+        /* 游戏卡片区域 */
+        .section {
+            padding: 120px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        
+        .section-title h2 {
+            font-size: 3.2rem;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+            font-weight: 800;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-primary);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .section-title p {
+            color: #6c757d;
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 30px auto 0;
+            font-weight: 300;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 35px;
+            margin-top: 50px;
+        }
+        
+        .game-card {
+            position: relative;
+            height: 450px;
+            perspective: 1500px;
+            cursor: pointer;
+        }
+        
+        .game-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            border-radius: 20px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .game-card:hover .game-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .game-card-front, .game-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        .game-card-front {
+            background-color: white;
+        }
+        
+        .game-card-back {
+            background: var(--gradient-primary);
+            color: white;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .game-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .game-content {
+            padding: 30px;
+        }
+        
+        .game-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .game-text {
+            color: #6c757d;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .game-rating {
+            display: flex;
+            align-items: center;
+        }
+        
+        .game-rating i {
+            color: #ffc107;
+            margin-right: 5px;
+        }
+        
+        .game-platform {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .game-platform i {
+            font-size: 1.2rem;
+        }
+        
+        .game-card-back h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .game-card-back p {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .game-card-back .btn {
+            background: white;
+            color: var(--primary-color);
+        }
+        
+        .game-card-back .btn:hover {
+            background: var(--light-color);
+        }
+        
+        /* 特色区域 */
+        .features {
+            background-color: #f5f7fa;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .features::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--gradient-primary);
+            opacity: 0.05;
+            border-radius: 50%;
+            top: -150px;
+            left: -150px;
+        }
+        
+        .features::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--gradient-secondary);
+            opacity: 0.05;
+            border-radius: 50%;
+            bottom: -150px;
+            right: -150px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-item {
+            background-color: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .feature-item:nth-child(2) .feature-icon {
+            background: var(--gradient-secondary);
+        }
+        
+        .feature-item:nth-child(3) .feature-icon {
+            background: var(--gradient-accent);
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .feature-text {
+            color: #6c757d;
+            line-height: 1.7;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 80px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: #dfe6e9;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 8px;
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 15px;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* 动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: var(--transition);
+                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+                z-index: 1001;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links li {
+                margin: 20px 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+                font-size: 1.8rem;
+                cursor: pointer;
+                z-index: 1002;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+            
+            .games-grid, .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <i class="fas fa-gamepad logo-icon"></i>
+                    游戏<span>世界</span>
+                </a>
+                
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                
+                <ul class="nav-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#games">热门游戏</a></li>
+                    <li><a href="#features">特色服务</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>探索游戏的无限可能</h1>
+            <p>发现最新、最热门的游戏，与全球玩家一起体验游戏的乐趣</p>
+            <a href="#games" class="btn">浏览游戏</a>
+        </div>
+        <a href="#games" class="scroll-down">
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <!-- 游戏卡片区域 -->
+    <section class="section" id="games">
+        <div class="container">
+            <div class="section-title">
+                <h2>热门游戏</h2>
+                <p>精选全球最受欢迎的游戏，涵盖多种类型和平台</p>
+            </div>
+            
+            <div class="games-grid">
+                <!-- 游戏卡片1 -->
+                <div class="game-card">
+                    <div class="game-card-inner">
+                        <div class="game-card-front">
+                            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="赛博朋克2077" class="game-img">
+                            <div class="game-content">
+                                <h3 class="game-title">赛博朋克2077</h3>
+                                <p class="game-text">在未来的夜之城中，扮演雇佣兵V，探索这个开放世界的RPG游戏。</p>
+                                <div class="game-info">
+                                    <div class="game-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <div class="game-platform">
+                                        <i class="fab fa-windows"></i>
+                                        <i class="fab fa-playstation"></i>
+                                        <i class="fab fa-xbox"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-card-back">
+                            <h3>赛博朋克2077</h3>
+                            <p>在这个开放世界的动作冒险RPG中，你将在充满力量、魅力和身体改造的世界中生存。扮演一名野心勃勃的雇佣兵，追寻一种独特的植入物，这是获得永生的关键。</p>
+                            <a href="#" class="btn">了解更多</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 游戏卡片2 -->
+                <div class="game-card">
+                    <div class="game-card-inner">
+                        <div class="game-card-front">
+                            <img src="https://images.unsplash.com/photo-1551103782-8ab07afd45c1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="塞尔达传说" class="game-img">
+                            <div class="game-content">
+                                <h3 class="game-title">塞尔达传说：旷野之息</h3>
+                                <p class="game-text">在这个开放世界的冒险游戏中，探索广阔的海拉尔大陆，解开古代谜题。</p>
+                                <div class="game-info">
+                                    <div class="game-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <div class="game-platform">
+                                        <i class="fab fa-nintendo-switch"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-card-back">
+                            <h3>塞尔达传说：旷野之息</h3>
+                            <p>踏上一段史诗般的旅程，在这个开放世界的冒险游戏中，你可以按照自己的方式探索、战斗和狩猎。醒来后的林克必须找到自己的过去，并拯救被灾厄盖侬摧毁的海拉尔王国。</p>
+                            <a href="#" class="btn">了解更多</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 游戏卡片3 -->
+                <div class="game-card">
+                    <div class="game-card-inner">
+                        <div class="game-card-front">
+                            <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="我的世界" class="game-img">
+                            <div class="game-content">
+                                <h3 class="game-title">我的世界</h3>
+                                <p class="game-text">在这个沙盒游戏中，你可以建造任何你想象的东西，探索无限的世界。</p>
+                                <div class="game-info">
+                                    <div class="game-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <div class="game-platform">
+                                        <i class="fab fa-windows"></i>
+                                        <i class="fab fa-playstation"></i>
+                                        <i class="fab fa-xbox"></i>
+                                        <i class="fab fa-nintendo-switch"></i>
+                                        <i class="fab fa-android"></i>
+                                        <i class="fab fa-apple"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-card-back">
+                            <h3>我的世界</h3>
+                            <p>探索随机生成的世界，建造从简单的房屋到宏伟的城堡的一切。在创造模式中自由发挥创意，或者在生存模式中收集资源，制作工具，建造庇护所，抵御危险的生物。</p>
+                            <a href="#" class="btn">了解更多</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特色区域 -->
+    <section class="section features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>我们的特色</h2>
+                <p>为游戏爱好者提供最优质的服务和体验</p>
+            </div>
+            
+            <div class="features-grid">
+                <!-- 特色1 -->
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3 class="feature-title">海量游戏库</h3>
+                    <p class="feature-text">提供超过10,000款游戏，涵盖PC、主机和移动平台，满足不同玩家的需求。</p>
+                </div>
+                
+                <!-- 特色2 -->
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">社区互动</h3>
+                    <p class="feature-text">加入我们的游戏社区，与全球玩家交流，分享游戏心得和攻略。</p>
+                </div>
+                
+                <!-- 特色3 -->
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="feature-title">专业客服</h3>
+                    <p class="feature-text">24小时在线客服，为您解决游戏中遇到的各种问题，提供专业支持。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>游戏世界是一个致力于为玩家提供最佳游戏体验的平台，我们汇集了全球最热门的游戏资源，让您畅享游戏的乐趣。</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-bilibili"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">首页</a></li>
+                        <li><a href="#games">热门游戏</a></li>
+                        <li><a href="#features">特色服务</a></li>
+                        <li><a href="#contact">联系我们</a></li>
+                        <li><a href="#">游戏资讯</a></li>
+                        <li><a href="#">下载中心</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>联系我们</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 北京市海淀区中关村大街1号</p>
+                    <p><i class="fas fa-phone"></i> 400-123-4567</p>
+                    <p><i class="fas fa-envelope"></i> contact@gameworld.com</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 游戏世界 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // 移动端菜单切换
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+        
+        // 点击导航链接后关闭菜单
+        const navItems = document.querySelectorAll('.nav-links a');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+            });
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
