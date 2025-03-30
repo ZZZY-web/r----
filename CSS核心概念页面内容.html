@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charest="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>CSS核心概念：背景、盒模型、定位及布局</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Microsoft YaHei', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                background-color: #f5f5f5;
+                padding: 20px;
+            }
+            
+            header {
+                background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+                color: white;
+                text-align: center;
+                padding: 40px 20px;
+                border-radius: 10px;
+                margin-bottom: 30px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            h1 {
+                font-size: 2.5em;
+                margin-bottom: 15px;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            }
+            
+            .subtitle {
+                font-size: 1.2em;
+                opacity: 0.9;
+            }
+            
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            
+            .section {
+                background-color: white;
+                border-radius: 10px;
+                padding: 30px;
+                margin-bottom: 30px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+                transition: transform 0.3s ease;
+            }
+            
+            .section:hover {
+                transform: translateY(-5px);
+            }
+            
+            h2 {
+                color: #2575fc;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid #f0f0f0;
+                font-size: 1.8em;
+            }
+            
+            h3 {
+                color: #6a11cb;
+                margin: 20px 0 10px;
+                font-size: 1.4em;
+            }
+            
+            p {
+                margin-bottom: 15px;
+                line-height: 1.7;
+            }
+            
+            .code-example {
+                background-color: #f8f9fa;
+                border-left: 4px solid #2575fc;
+                padding: 15px;
+                margin: 15px 0;
+                border-radius: 0 5px 5px 0;
+                font-family: Consolas, Monaco, 'Andale Mono', monospace;
+                overflow-x: auto;
+            }
+            
+            .property-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 20px 0;
+            }
+            
+            .property-table th, .property-table td {
+                padding: 12px 15px;
+                text-align: left;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .property-table th {
+                background-color: #f5f7fa;
+                color: #2575fc;
+                font-weight: bold;
+            }
+            
+            .property-table tr:hover {
+                background-color: #f8f9fa;
+            }
+            
+            .demo-box {
+                background-color: #e9f5ff;
+                border: 2px solid #2575fc;
+                padding: 20px;
+                margin: 20px 0;
+                border-radius: 5px;
+                position: relative;
+            }
+            
+            .demo-label {
+                position: absolute;
+                top: -10px;
+                left: 20px;
+                background-color: #2575fc;
+                color: white;
+                padding: 2px 10px;
+                border-radius: 3px;
+                font-size: 0.8em;
+            }
+            
+            .flex-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                margin: 20px 0;
+            }
+            
+            .flex-item {
+                flex: 1;
+                min-width: 250px;
+            }
+            
+            .image-container {
+                text-align: center;
+                margin: 20px 0;
+            }
+            
+            .image-container img {
+                max-width: 100%;
+                border-radius: 5px;
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            .note {
+                background-color: #fff8e1;
+                border-left: 4px solid #ffc107;
+                padding: 15px;
+                margin: 15px 0;
+                border-radius: 0 5px 5px 0;
+            }
+            
+            footer {
+                text-align: center;
+                padding: 20px;
+                margin-top: 30px;
+                color: #666;
+                font-size: 0.9em;
+            }
+            
+            /* 响应式设计 */
+            @media (max-width: 768px) {
+                .flex-item {
+                    min-width: 100%;
+                }
+                
+                h1 {
+                    font-size: 2em;
+                }
+                
+                .section {
+                    padding: 20px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <h1>CSS核心概念</h1>
+                <p class="subtitle">背景、盒模型、定位及布局的深入理解</p>
+            </div>
+        </header>
+        
+        <div class="container">
+            <section class="section">
+                <h2>1. CSS背景属性</h2>
+                <p>背景属性允许我们控制元素的背景外观，包括颜色、图像、位置和大小等。</p>
+                
+                <div class="flex-container">
+                    <div class="flex-item">
+                        <h3>背景颜色</h3>
+                        <p>使用 <code>background-color</code> 属性设置元素的背景颜色。</p>
+                        <div class="code-example">
+                            .element {<br>
+                            &nbsp;&nbsp;background-color: #3498db;<br>
+                            &nbsp;&nbsp;/* 也可以使用rgba添加透明度 */<br>
+                            &nbsp;&nbsp;background-color: rgba(52, 152, 219, 0.5);<br>
+                            }
+                        </div>
+                        
+                        <div class="demo-box" style="background-color: rgba(52, 152, 219, 0.5);">
+                            <div class="demo-label">示例</div>
+                            <p>这是一个带有背景颜色的元素</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-item">
+                        <h3>背景图像</h3>
+                        <p>使用 <code>background-image</code> 属性设置元素的背景图像。</p>
+                        <div class="code-example">
+                            .element {<br>
+                            &nbsp;&nbsp;background-image: url('image.jpg');<br>
+                            &nbsp;&nbsp;background-repeat: no-repeat;<br>
+                            &nbsp;&nbsp;background-position: center;<br>
+                            &nbsp;&nbsp;background-size: cover;<br>
+                            }
+                        </div>
+                        
+                        <div class="demo-box" style="background-image: url('https://via.placeholder.com/400x200'); background-size: cover; background-position: center; height: 150px;">
+                            <div class="demo-label">示例</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>背景简写属性</h3>
+                <p>可以使用 <code>background</code> 简写属性一次性设置多个背景属性。</p>
+                <div class="code-example">
+                    .element {<br>
+                    &nbsp;&nbsp;background: #3498db url('image.jpg') no-repeat center / cover;<br>
+                    }
+                </div>
+                
+                <table class="property-table">
+                    <tr>
+                        <th>属性</th>
+                        <th>描述</th>
+                        <th>可能的值</th>
+                    </tr>
+                    <tr>
+                        <td>background-color</td>
+                        <td>设置背景颜色</td>
+                        <td>颜色值、transparent</td>
+                    </tr>
+                    <tr>
+                        <td>background-image</td>
+                        <td>设置背景图像</td>
+                        <td>url()、none、渐变</td>
+                    </tr>
+                    <tr>
+                        <td>background-repeat</td>
+                        <td>设置背景图像如何重复</td>
+                        <td>repeat、no-repeat、repeat-x、repeat-y</td>
+                    </tr>
+                    <tr>
+                        <td>background-position</td>
+                        <td>设置背景图像的位置</td>
+                        <td>top、right、bottom、left、center、百分比、像素值</td>
+                    </tr>
+                    <tr>
+                        <td>background-size</td>
+                        <td>设置背景图像的大小</td>
+                        <td>cover、contain、auto、像素值、百分比</td>
+                    </tr>
+                </table>
+            </section>
+            
+            <section class="section">
+                <h2>2. CSS盒模型</h2>
+                <p>CSS盒模型是网页布局的基础，它描述了元素内容、内边距、边框和外边距如何一起决定元素的总体大小。</p>
+                
+                <div class="image-container">
+                    <img src="https://www.w3.org/TR/css-box-3/images/box.png" alt="CSS盒模型示意图" style="max-width: 500px;">
+                </div>
+                
+                <div class="flex-container">
+                    <div class="flex-item">
+                        <h3>标准盒模型 vs 怪异盒模型</h3>
+                        <p>在标准盒模型中，width 和 height 只包括内容区域的宽度和高度。而在怪异盒模型中，width 和 height 包括内容、内边距和边框。</p>
+                        
+                        <div class="code-example">
+                            /* 标准盒模型 */<br>
+                            .box-standard {<br>
+                            &nbsp;&nbsp;box-sizing: content-box; /* 默认值 */<br>
+                            &nbsp;&nbsp;width: 300px;<br>
+                            &nbsp;&nbsp;padding: 20px;<br>
+                            &nbsp;&nbsp;border: 10px solid #3498db;<br>
+                            &nbsp;&nbsp;/* 总宽度 = 300 + 20*2 + 10*2 = 360px */<br>
+                            }<br><br>
+                            
+                            /* 怪异盒模型 */<br>
+                            .box-border {<br>
+                            &nbsp;&nbsp;box-sizing: border-box;<br>
+                            &nbsp;&nbsp;width: 300px;<br>
+                            &nbsp;&nbsp;padding: 20px;<br>
+                            &nbsp;&nbsp;border: 10px solid #3498db;<br>
+                            &nbsp;&nbsp;/* 总宽度 = 300px */<br>
+                            }
+                        </div>
+                    </div>
+                    
+                    <div class="flex-item">
+                        <h3>盒模型的组成部分</h3>
+                        <ul style="list-style-type: disc; padding-left: 20px; margin-bottom: 15px;">
+                            <li><strong>内容区域 (Content)</strong>：显示文本、图像等内容的区域</li>
+                            <li><strong>内边距 (Padding)</strong>：内容与边框之间的空间</li>
+                            <li><strong>边框 (Border)</strong>：围绕内容和内边距的线条</li>
+                            <li><strong>外边距 (Margin)</strong>：元素与其他元素之间的空间</li>
+                        </ul>
+                        
+                        <div class="demo-box">
+                            <div class="demo-label">盒模型演示</div>
+                            <div style="background-color: #f1c40f; padding: 20px; border: 5px solid #e67e22; margin: 15px; text-align: center;">
+                                内容区域
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="note">
+                    <strong>提示：</strong> 现代CSS开发中，通常会在全局样式中设置 <code>* { box-sizing: border-box; }</code>，这样所有元素都使用怪异盒模型，使布局计算更加直观。
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>3. CSS定位</h2>
+                <p>CSS定位允许我们控制元素在页面上的确切位置，这对于创建复杂的布局和重叠元素非常重要。</p>
+                
+                <h3>position属性</h3>
+                <p>position属性指定元素的定位方法类型。</p>
+                
+                <table class="property-table">
+                    <tr>
+                        <th>值</th>
+                        <th>描述</th>
+                    </tr>
+                    <tr>
+                        <td>static</td>
+                        <td>默认值。元素按照正常的文档流进行布局。</td>
+                    </tr>
+                    <tr>
+                        <td>relative</td>
+                        <td>元素相对于其正常位置进行定位，可使用top、right、bottom、left属性进行偏移。</td>
+                    </tr>
+                    <tr>
+                        <td>absolute</td>
+                        <td>元素相对于最近的已定位祖先元素进行定位。如果没有已定位的祖先元素，则相对于初始包含块。</td>
+                    </tr>
+                    <tr>
+                        <td>fixed</td>
+                        <td>元素相对于浏览器窗口进行定位，即使页面滚动也不会移动。</td>
+                    </tr>
+                    <tr>
+                        <td>sticky</td>
+                        <td>元素根据用户的滚动位置在relative和fixed之间切换。</td>
+                    </tr>
+                </table>
+                
+                <div class="flex-container">
+                    <div class="flex-item">
+                        <h3>相对定位示例</h3>
+                        <div class="code-example">
+                            .relative-box {<br>
+                            &nbsp;&nbsp;position: relative;<br>
+                            &nbsp;&nbsp;top: 20px;<br>
+                            &nbsp;&nbsp;left: 20px;<br>
+                            }
+                        </div>
+                        
+                        <div class="demo-box" style="height: 150px; position: relative;">
+                            <div class="demo-label">相对定位</div>
+                            <div style="width: 100px; height: 100px; background-color: #3498db; position: relative; top: 20px; left: 20px;">
+                                相对定位元素
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-item">
+                        <h3>绝对定位示例</h3>
+                        <div class="code-example">
+                            .container {<br>
+                            &nbsp;&nbsp;position: relative;<br>
+                            }<br><br>
+                            
+                            .absolute-box {<br>
+                            &nbsp;&nbsp;position: absolute;<br>
+                            &nbsp;&nbsp;top: 20px;<br>
+                            &nbsp;&nbsp;right: 20px;<br>
+                            }
+                        </div>
+                        
+                        <div class="demo-box" style="height: 150px; position: relative;">
+                            <div class="demo-label">绝对定位</div>
+                            <div style="width: 100px; height: 100px; background-color: #e74c3c; position: absolute; top: 20px; right: 20px;">
+                                绝对定位元素
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>4. CSS布局技术</h2>
+                <p>CSS提供了多种布局技术，用于创建响应式和灵活的页面布局。</p>
+                
+                <div class="flex-container">
+                    <div class="flex-item">
+                        <h3>Flexbox布局</h3>
+                        <p>Flexbox是一种一维布局模型，适用于在一行或一列中排列项目。</p>
+                        
+                        <div class="code-example">
+                            .flex-container {<br>
+                            &nbsp;&nbsp;display: flex;<br>
+                            &nbsp;&nbsp;justify-content: space-between;<br>
+                            &nbsp;&nbsp;align-items: center;<br>
+                            }
+                        </div>
+                        
+                        <div class="demo-box">
+                            <div class="demo-label">Flexbox示例</div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="background-color: #3498db; padding: 10px; color: white;">项目1</div>
+                                <div style="background-color: #2ecc71; padding: 10px; color: white;">项目2</div>
+                                <div style="background-color: #e74c3c; padding: 10px; color: white;">项目3</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-item">
+                        <h3>Grid布局</h3>
+                        <p>Grid是一种二维布局模型，适用于同时在行和列中排列项目。</p>
+                        
+                        <div class="code-example">
+                            .grid-container {<br>
+                            &nbsp;&nbsp;display: grid;<br>
+                            &nbsp;&nbsp;grid-template-columns: repeat(3, 1fr);<br>
+                            &nbsp;&nbsp;grid-gap: 10px;<br>
+                            }
+                        </div>
+                        
+                        <div class="demo-box">
+                            <div class="demo-label">Grid示例</div>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 10px;">
+                                <div style="background-color: #3498db; padding: 10px; color: white;">项目1</div>
+                                <div style="background-color: #2ecc71; padding: 10px; color: white;">项目2</div>
+                                <div style="background-color: #e74c3c; padding: 10px; color: white;">项目3</div>
+                                <div style="background-color: #f1c40f; padding: 10px; color: white;">项目4</div>
+                                <div style="background-color: #9b59b6; padding: 10px; color: white;">项目5</div>
+                                <div style="background-color: #34495e; padding: 10px; color: white;">项目6</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>多列布局</h3>
+                <p>CSS多列布局允许内容在多个列中流动，类似于报纸的布局。</p>
+                
+                <div class="code-example">
+                    .multi-column {<br>
+                    &nbsp;&nbsp;column-count: 3;<br>
+                    &nbsp;&nbsp;column-gap: 20px;<br>
+                    &nbsp;&nbsp;column-rule: 1px solid #ddd;<br>
+                    }
+                </div>
+                
+                <div class="demo-box">
+                    <div class="demo-label">多列布局示例</div>
+                    <div style="column-count: 3; column-gap: 20px; column-rule: 1px solid #ddd;">
+                        <p>CSS（层叠样式表）是一种用来为结构化文档添加样式的计算机语言。CSS不仅可以静态地修饰网页，还可以配合各种脚本语言动态地对网页各元素进行格式化。</p>
+                        <p>CSS能够对网页中元素位置的排版进行像素级精确控制，支持几乎所有的字体字号样式，拥有对网页对象和模型样式编辑的能力。</p>
+                        <p>CSS3是CSS技术的升级版本，CSS3语言开发是朝着模块化发展的。以前的规范作为一个模块实在是太庞大而且比较复杂，所以，把它分解为一些小的模块，更多新的模块也被加入进来。</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>5. 实际应用案例</h2>
+                <p>下面是一些CSS核心概念在实际项目中的应用案例。</p>
+                
+                <h3>导航栏设计</h3>
+                <div class="code-example">
+                    .navbar {<br>
+                    &nbsp;&nbsp;display: flex;<br>
+                    &nbsp;&nbsp;justify-content: space-between;<br>
+                    &nbsp;&nbsp;align-items: center;<br>
+                    &nbsp;&nbsp;background-color: #2c3e50;<br>
+                    &nbsp;&nbsp;padding: 15px 20px;<br>
+                    &nbsp;&nbsp;position: sticky;<br>
+                    &nbsp;&nbsp;top: 0;<br>
+                    &nbsp;&nbsp;z-index: 100;<br>
+                    }<br><br>
+                    
+                    .nav-links {<br>
+                    &nbsp;&nbsp;display: flex;<br>
+                    &nbsp;&nbsp;gap: 20px;<br>
+                    }<br><br>
+                    
+                    .nav-links a {<br>
+                    &nbsp;&nbsp;color: white;<br>
+                    &nbsp;&nbsp;text-decoration: none;<br>
+                    &nbsp;&nbsp;transition: color 0.3s;<br>
+                    }<br><br>
+                    
+                    .nav-links a:hover {<br>
+                    &nbsp;&nbsp;color: #3498db;<br>
+                    }
+                </div>
+                
+                <div class="demo-box" style="padding: 0; overflow: hidden;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; background-color: #2c3e50; padding: 15px 20px;">
+                        <div style="color: white; font-weight: bold; font-size: 1.2em;">网站Logo</div>
+                        <div style="display: flex; gap: 20px;">
+                            <a href="#" style="color: white; text-decoration: none;">首页</a>
+                            <a href="#" style="color: white; text-decoration: none;">关于</a>
+                            <a href="#" style="color: white; text-decoration: none;">服务</a>
+                            <a href="#" style="color: white; text-decoration: none;">联系我们</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>卡片布局</h3>
+                <div class="code-example">
+                    .card-container {<br>
+                    &nbsp;&nbsp;display: grid;<br>
+                    &nbsp;&nbsp;grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));<br>
+                    &nbsp;&nbsp;gap: 20px;<br>
+                    }<br><br>
+                    
+                    .card {<br>
+                    &nbsp;&nbsp;background-color: white;<br>
+                    &nbsp;&nbsp;border-radius: 8px;<br>
+                    &nbsp;&nbsp;overflow: hidden;<br>
+                    &nbsp;&nbsp;box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);<br>
+                    &nbsp;&nbsp;transition: transform 0.3s, box-shadow 0.3s;<br>
+                    }<br><br>
+                    
+                    .card:hover {<br>
+                    &nbsp;&nbsp;transform: translateY(-5px);<br>
+                    &nbsp;&nbsp;box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);<br>
+                    }
+                </div>
+                
+                <div class="demo-box">
+                    <div class="demo-label">卡片布局示例</div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+                        <div style="background-color: white; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+                            <div style="height: 120px; background-color: #3498db;"></div>
+                            <div style="padding: 15px;">
+                                <h4 style="margin-bottom: 10px;">卡片标题1</h4>
+                                <p style="font-size: 0.9em;">这是卡片内容的简短描述，展示了卡片布局的效果。</p>
+                            </div>
+                        </div>
+                        <div style="background-color: white; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+                            <div style="height: 120px; background-color: #2ecc71;"></div>
+                            <div style="padding: 15px;">
+                                <h4 style="margin-bottom: 10px;">卡片标题2</h4>
+                                <p style="font-size: 0.9em;">这是卡片内容的简短描述，展示了卡片布局的效果。</p>
+                            </div>
+                        </div>
+                        <div style="background-color: white; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+                            <div style="height: 120px; background-color: #e74c3c;"></div>
+                            <div style="padding: 15px;">
+                                <h4 style="margin-bottom: 10px;">卡片标题3</h4>
+                                <p style="font-size: 0.9em;">这是卡片内容的简短描述，展示了卡片布局的效果。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <footer>
+            <div class="container">
+                <p>CSS核心概念学习指南 &copy; 2023 版权所有</p>
+                <p>本教程旨在帮助初学者理解CSS的核心概念，包括背景、盒模型、定位及布局技术。</p>
+            </div>
+        </footer>
+    </body>
+</html>
