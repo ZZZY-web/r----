@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>CSS核心概念：背景、盒模型、布局、动画</title>
+        <style>
+            body{
+                background-color: #ffffff;
+                font-family: 'Microsoft YaHei', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                margin: 0;
+                padding: 20px;
+            }
+            h1{
+                background-image: url("./images/780.jpg");
+                background-position: 50% 50%;
+                background-repeat: no-repeat;
+                text-align: center;
+                padding: 40px 0;
+                color: #2c3e50;
+                margin-bottom: 30px;
+            }
+            
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f8f9fa;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            
+            .section {
+                margin-bottom: 30px;
+                padding: 20px;
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            }
+            
+            h2 {
+                color: #3498db;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+            
+            .box-model-demo {
+                width: 200px;
+                height: 200px;
+                background-color: #e74c3c;
+                padding: 20px;
+                border: 5px solid #3498db;
+                margin: 30px auto;
+                text-align: center;
+                color: white;
+            }
+            
+            .flex-container {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                margin: 20px 0;
+            }
+            
+            .flex-item {
+                flex-basis: 30%;
+                background-color: #3498db;
+                color: white;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-radius: 5px;
+                text-align: center;
+            }
+            
+            .animation-demo {
+                width: 100px;
+                height: 100px;
+                background-color: #9b59b6;
+                margin: 30px auto;
+                animation: pulse 2s infinite;
+            }
+            
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.2);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>CSS核心概念</h1>
+            
+            <div class="section">
+                <h2>背景（Background）</h2>
+                <p>CSS背景属性允许您控制元素的背景效果。主要属性包括：</p>
+                <ul>
+                    <li><strong>background-color</strong>：设置背景颜色</li>
+                    <li><strong>background-image</strong>：设置背景图片</li>
+                    <li><strong>background-repeat</strong>：控制背景图片的重复方式</li>
+                    <li><strong>background-position</strong>：设置背景图片的位置</li>
+                    <li><strong>background-size</strong>：设置背景图片的大小</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>盒模型（Box Model）</h2>
+                <p>CSS盒模型是网页布局的基础，包括：</p>
+                <ul>
+                    <li><strong>内容（Content）</strong>：元素的实际内容</li>
+                    <li><strong>内边距（Padding）</strong>：内容与边框之间的空间</li>
+                    <li><strong>边框（Border）</strong>：围绕内容和内边距的线条</li>
+                    <li><strong>外边距（Margin）</strong>：元素与其他元素之间的空间</li>
+                </ul>
+                <div class="box-model-demo">盒模型演示</div>
+            </div>
+            
+            <div class="section">
+                <h2>布局（Layout）</h2>
+                <p>CSS提供了多种布局方式，包括：</p>
+                <ul>
+                    <li><strong>流式布局</strong>：默认的文档流布局</li>
+                    <li><strong>浮动布局</strong>：使用float属性</li>
+                    <li><strong>定位布局</strong>：使用position属性</li>
+                    <li><strong>弹性布局</strong>：使用Flexbox</li>
+                    <li><strong>网格布局</strong>：使用Grid</li>
+                </ul>
+                <div class="flex-container">
+                    <div class="flex-item">Flex项目1</div>
+                    <div class="flex-item">Flex项目2</div>
+                    <div class="flex-item">Flex项目3</div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>动画（Animation）</h2>
+                <p>CSS动画允许元素从一种样式逐渐变化为另一种样式：</p>
+                <ul>
+                    <li><strong>transition</strong>：简单的状态过渡</li>
+                    <li><strong>transform</strong>：元素的2D或3D转换</li>
+                    <li><strong>animation</strong>：使用@keyframes创建复杂动画</li>
+                </ul>
+                <div class="animation-demo"></div>
+            </div>
+        </div>
+    </body>
+</html>
