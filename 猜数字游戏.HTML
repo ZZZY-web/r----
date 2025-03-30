@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猜数字游戏 - 休闲小游戏</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #00cec9;
+            --accent-color: #fd79a8;
+            --dark-color: #2d3436;
+            --light-color: #dfe6e9;
+            --gradient-primary: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            --gradient-secondary: linear-gradient(135deg, #00cec9, #81ecec);
+            --gradient-accent: linear-gradient(135deg, #fd79a8, #fab1a0);
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+            color: var(--dark-color);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+        
+        header.scrolled {
+            padding: 5px 0;
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
+        
+        .logo-icon {
+            margin-right: 12px;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 40px;
+        }
+        
+        .nav-links a {
+            color: var(--dark-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 8px 0;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--gradient-primary);
+            transition: width 0.4s ease;
+            border-radius: 2px;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* 主要内容区域 */
+        .main-content {
+            padding-top: 100px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            font-weight: 800;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-primary);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .section-title p {
+            color: #6c757d;
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 30px auto 0;
+            font-weight: 300;
+        }
+        
+        /* 猜数字游戏样式 */
+        .game-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+        
+        .minigame-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--box-shadow);
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .minigame-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .minigame-card h3 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .minigame-card p {
+            color: #6c757d;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .game-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        #guess-input {
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            font-size: 1rem;
+            width: 200px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        #guess-input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.3);
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(108, 92, 231, 0.4);
+        }
+        
+        .btn-secondary {
+            background: var(--gradient-accent);
+        }
+        
+        .game-message {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .game-message.error {
+            background-color: #ffecec;
+            color: #e74c3c;
+        }
+        
+        .game-message.success {
+            background-color: #e7f9ed;
+            color: #27ae60;
+        }
+        
+        .game-message.hint {
+            background-color: #e7f3fe;
+            color: #3498db;
+        }
+        
+        .game-history {
+            margin-top: 30px;
+            text-align: left;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .game-history h4 {
+            margin-bottom: 15px;
+            color: var(--dark-color);
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        #history-list {
+            list-style: none;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        #history-list li {
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+        
+        #history-list li.correct {
+            background-color: #e7f9ed;
+            color: #27ae60;
+        }
+        
+        #history-list li.too-low {
+            background-color: #fff8e7;
+            color: #f39c12;
+        }
+        
+        #history-list li.too-high {
+            background-color: #ffecec;
+            color: #e74c3c;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+        
+        .footer-content p {
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin: 0 10px;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: var(--transition);
+                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+                z-index: 1001;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links li {
+                margin: 20px 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+                font-size: 1.8rem;
+                cursor: pointer;
+                z-index: 1002;
+            }
+            
+            .minigame-card {
+                padding: 30px 20px;
+            }
+            
+            .game-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            #guess-input {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <i class="fas fa-gamepad logo-icon"></i>
+                    游戏<span>世界</span>
+                </a>
+                
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                
+                <ul class="nav-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#minigame">猜数字游戏</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <div class="main-content">
+        <!-- 猜数字游戏区域 -->
+        <section class="section" id="minigame">
+            <div class="container">
+                <div class="section-title">
+                    <h2>猜数字游戏</h2>
+                    <p>测试你的运气和推理能力，看看你能用多少次猜中正确的数字</p>
+                </div>
+                
+                <div class="game-container">
+                    <div class="minigame-card">
+                        <h3>猜数字游戏</h3>
+                        <p>我已经想好了一个1到100之间的数字，你能猜出来吗？</p>
+                        <div class="game-controls">
+                            <input type="number" id="guess-input" min="1" max="100" placeholder="输入你的猜测...">
+                            <button id="guess-btn" class="btn">猜一猜</button>
+                            <button id="reset-btn" class="btn btn-secondary">重新开始</button>
+                        </div>
+                        <div id="game-message" class="game-message"></div>
+                        <div id="game-history" class="game-history">
+                            <h4>猜测历史</h4>
+                            <ul id="history-list"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <p>猜数字游戏 &copy; 2023 版权所有</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-qq"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>联系我们: contact@example.com</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // 移动端菜单切换
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+        
+        // 点击导航链接后关闭菜单
+        const navItems = document.querySelectorAll('.nav-links a');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+            });
+        });
+        
+        // 猜数字游戏逻辑
+        (function() {
+            const guessInput = document.getElementById('guess-input');
+            const guessBtn = document.getElementById('guess-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const gameMessage = document.getElementById('game-message');
+            const historyList = document.getElementById('history-list');
+            
+            let secretNumber;
+            let attempts = 0;
+            let gameOver = false;
+            
+            // 初始化游戏
+            function initGame() {
+                secretNumber = Math.floor(Math.random() * 100) + 1;
+                attempts = 0;
+                gameOver = false;
+                gameMessage.textContent = '游戏开始！请猜一个1到100之间的数字。';
+                gameMessage.className = 'game-message';
+                historyList.innerHTML = '';
+                guessInput.value = '';
+                guessInput.focus();
+            }
+            
+            // 检查猜测
+            function checkGuess() {
+                if (gameOver) return;
+                
+                const userGuess = parseInt(guessInput.value);
+                
+                if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                    gameMessage.textContent = '请输入1到100之间的有效数字！';
+                    gameMessage.className = 'game-message error';
+                    return;
+                }
+                
+                attempts++;
+                
+                // 创建历史记录项
+                const historyItem = document.createElement('li');
+                
+                if (userGuess === secretNumber) {
+                    gameMessage.textContent = `恭喜你！你用了${attempts}次猜对了数字${secretNumber}！`;
+                    gameMessage.className = 'game-message success';
+                    historyItem.textContent = `第${attempts}次: ${userGuess} - 正确！`;
+                    historyItem.className = 'correct';
+                    gameOver = true;
+                } else if (userGuess < secretNumber) {
+                    gameMessage.textContent = '太小了！再试一次。';
+                    gameMessage.className = 'game-message hint';
+                    historyItem.textContent = `第${attempts}次: ${userGuess} - 太小了`;
+                    historyItem.className = 'too-low';
+                } else {
+                    gameMessage.textContent = '太大了！再试一次。';
+                    gameMessage.className = 'game-message hint';
+                    historyItem.textContent = `第${attempts}次: ${userGuess} - 太大了`;
+                    historyItem.className = 'too-high';
+                }
+                
+                historyList.prepend(historyItem);
+                guessInput.value = '';
+                guessInput.focus();
+            }
+            
+            // 事件监听器
+            guessBtn.addEventListener('click', checkGuess);
+            resetBtn.addEventListener('click', initGame);
+            
+            guessInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkGuess();
+                }
+            });
+            
+            // 初始化游戏
+            initGame();
+        })();
+    </script>
+</body>
+</html>

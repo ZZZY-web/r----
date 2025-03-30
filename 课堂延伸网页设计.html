@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>web 前端开发技术课程仓库</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Microsoft YaHei', sans-serif;
+                background: linear-gradient(135deg, #f6f9fc 0%, #dfe9f3 100%);
+                min-height: 100vh;
+                padding: 40px 20px;
+                color: #333;
+            }
+            
+            h1 {
+                text-align: center;
+                margin: 20px 0 40px;
+                color: #2c3e50;
+                font-size: 2.5rem;
+                font-weight: 700;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+                position: relative;
+            }
+            
+            h1:after {
+                content: '';
+                display: block;
+                width: 80px;
+                height: 4px;
+                background: linear-gradient(90deg, #3498db, #9b59b6);
+                margin: 15px auto 0;
+                border-radius: 2px;
+            }
+            
+            h2 {
+                color: #2c3e50;
+                margin: 25px 0 15px;
+                font-weight: 600;
+                position: relative;
+                padding-left: 15px;
+            }
+            
+            h2:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 5px;
+                background: linear-gradient(to bottom, #3498db, #9b59b6);
+                border-radius: 2px;
+            }
+            
+            h2 span {
+                display: block;
+                font-size: 0.8em;
+                color: #7f8c8d;
+                font-weight: normal;
+                margin-top: 8px;
+            }
+            
+            p {
+                line-height: 1.8;
+                margin-bottom: 20px;
+                color: #34495e;
+                font-size: 1.05rem;
+            }
+            
+            a {
+                color: #3498db;
+                text-decoration: none;
+                transition: all 0.3s;
+                position: relative;
+                font-weight: 500;
+            }
+            
+            a:hover {
+                color: #9b59b6;
+            }
+            
+            a:after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: -2px;
+                left: 0;
+                background: linear-gradient(90deg, #3498db, #9b59b6);
+                transition: width 0.3s ease;
+            }
+            
+            a:hover:after {
+                width: 100%;
+            }
+            
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+            
+            .card-gallery {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 30px;
+                margin: 60px 0;
+            }
+            
+            .card {
+                width: 320px;
+                height: 420px;
+                background-color: white;
+                border-radius: 20px;
+                overflow: hidden;
+                box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+                transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+                position: relative;
+                transform-style: preserve-3d;
+                perspective: 1500px;
+            }
+            
+            .card:hover {
+                transform: translateY(-15px) rotateX(5deg);
+                box-shadow: 0 20px 40px rgba(50, 50, 93, 0.15), 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+            
+            .card-img {
+                width: 100%;
+                height: 220px;
+                object-fit: cover;
+                transition: transform 0.8s ease;
+            }
+            
+            .card:hover .card-img {
+                transform: scale(1.05);
+            }
+            .card-content {
+                padding: 25px;
+                position: relative;
+            }
+            
+            .card-title {
+                font-size: 1.4em;
+                font-weight: 700;
+                margin-bottom: 15px;
+                color: #2c3e50;
+                position: relative;
+                display: inline-block;
+            }
+            
+            .card-title:after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 40px;
+                height: 3px;
+                background: linear-gradient(90deg, #3498db, #9b59b6);
+                transition: width 0.3s ease;
+            }
+            
+            .card:hover .card-title:after {
+                width: 100%;
+            }
+            
+            .card-text {
+                color: #7f8c8d;
+                font-size: 1em;
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }
+            
+            .card-btn {
+                display: inline-block;
+                padding: 10px 20px;
+                background: linear-gradient(90deg, #3498db, #9b59b6);
+                color: white;
+                border-radius: 30px;
+                font-weight: 500;
+                text-decoration: none;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+                position: relative;
+                overflow: hidden;
+                z-index: 1;
+            }
+            
+            .card-btn:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 0;
+                height: 100%;
+                background: linear-gradient(90deg, #9b59b6, #3498db);
+                transition: width 0.4s ease;
+                z-index: -1;
+            }
+            
+            .card-btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 7px 15px rgba(52, 152, 219, 0.4);
+                text-decoration: none;
+                color: white;
+            }
+            
+            .card-btn:hover:before {
+                width: 100%;
+            }
+            
+            @media (max-width: 768px) {
+                .card {
+                    width: 100%;
+                    max-width: 350px;
+                }
+                
+                h1 {
+                    font-size: 2rem;
+                }
+            }
+            
+            /* 3D翻转效果 */
+            .card-inner {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                transform-style: preserve-3d;
+            }
+            
+            .card.flipped .card-inner {
+                transform: rotateY(180deg);
+            }
+            
+            .card-front, .card-back {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+                background-color: white;
+            }
+            
+            .card-back {
+                transform: rotateY(180deg);
+                padding: 30px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                border-radius: 20px;
+            }
+            
+            .card-back h3 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+                position: relative;
+                padding-bottom: 15px;
+            }
+            
+            .card-back h3:after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 50px;
+                height: 3px;
+                background-color: rgba(255, 255, 255, 0.7);
+            }
+            
+            .card-back p {
+                color: rgba(255, 255, 255, 0.9);
+                margin-bottom: 15px;
+                font-size: 1.1em;
+                line-height: 1.6;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>这是我的第一个页面中的一级标题</h1>
+            <div>
+            </div>
+            <div>
+                <h2>这是第二部分标题<br><span>这是副标题</span></h2>
+                <p>这是一段话，可以加入行内元素，比如a、img等。<a href="https://www.xbmu.edu.cn">这是一个链接</a></p>
+            </div>
+            
+            <!-- 卡片画廊 -->
+            <div class="card-gallery">
+                <!-- 卡片1 -->
+                <div class="card" onclick="this.classList.toggle('flipped')">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="https://picsum.photos/id/1015/600/400" alt="风景图片" class="card-img">
+                            <div class="card-content">
+                                <div class="card-title">HTML5 技术</div>
+                                <p class="card-text">HTML5是构建Web内容的核心语言，提供了丰富的语义化标签和API。</p>
+                                <a href="#" class="card-btn">了解更多</a>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>HTML5 高级特性</h3>
+                            <p>包括Canvas绘图、本地存储、语义化标签、视频音频支持等多种功能。</p>
+                            <p>点击卡片可以翻转回正面</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 卡片2 -->
+                <div class="card" onclick="this.classList.toggle('flipped')">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="https://picsum.photos/id/1016/600/400" alt="风景图片" class="card-img">
+                            <div class="card-content">
+                                <div class="card-title">CSS3 样式</div>
+                                <p class="card-text">CSS3提供了强大的样式功能，包括动画、过渡、弹性布局等。</p>
+                                <a href="#" class="card-btn">了解更多</a>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>CSS3 动画与过渡</h3>
+                            <p>使用keyframes创建复杂动画，使用transition实现平滑过渡效果。</p>
+                            <p>点击卡片可以翻转回正面</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 卡片3 -->
+                <div class="card" onclick="this.classList.toggle('flipped')">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <img src="https://picsum.photos/id/1018/600/400" alt="风景图片" class="card-img">
+                            <div class="card-content">
+                                <div class="card-title">JavaScript</div>
+                                <p class="card-text">JavaScript是Web前端的编程语言，可以实现丰富的交互功能。</p>
+                                <a href="#" class="card-btn">了解更多</a>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>现代JavaScript</h3>
+                            <p>ES6+带来了箭头函数、Promise、async/await等现代特性，大大提升了开发效率。</p>
+                            <p>点击卡片可以翻转回正面</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            // 添加卡片悬停音效
+            const cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    // 创建悬停音效
+                    const hoverSound = new Audio();
+                    hoverSound.volume = 0.2;
+                    // 使用一个简短的音效文件URL替代不完整的base64数据
+                    hoverSound.src = 'https://assets.mixkit.co/sfx/preview/mixkit-simple-clicking-sound-1113.mp3';
+                    hoverSound.play();
+                });
+            });
+        </script>
