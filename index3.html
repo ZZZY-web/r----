@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国古代物理学信息可视化</title>
+    
+    <!-- 方式三：外部样式表引入 -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- 方式二：内部样式表 -->
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+            padding: 20px;
+            background-image: url('https://img.freepik.com/free-vector/elegant-white-background-with-shiny-lines_1017-17580.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.8em;
+            position: relative;
+            padding-bottom: 15px;
+            font-family: "黑体", SimHei, sans-serif;
+            text-decoration: underline;
+            text-decoration-color: #3498db;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 10px;
+            letter-spacing: 2px;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2c3e50);
+            border-radius: 2px;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin: 20px 0;
+            font-size: 1.8em;
+            position: relative;
+            display: inline-block;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        
+        h2 span {
+            display: block;
+            font-size: 0.6em;
+            color: #7f8c8d;
+            font-weight: 400;
+            margin-top: 5px;
+        }
+        
+        /* 内部样式表示例的样式 */
+        #internal-style-example {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #9b59b6;
+        }
+        
+        #internal-style-example h3 {
+            color: #9b59b6;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        #internal-style-example p {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        /* 代码示例样式 */
+        .code-example {
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border-left: 4px solid #3498db;
+        }
+        
+        .code-example code {
+            color: #e74c3c;
+        }
+        
+        .code-example .comment {
+            color: #7f8c8d;
+        }
+        
+        .code-example .tag {
+            color: #3498db;
+        }
+        
+        .code-example .attr {
+            color: #9b59b6;
+        }
+        
+        .code-example .value {
+            color: #27ae60;
+        }
+        
+        /* 古代物理主题样式 */
+        .ancient-physics-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid #3498db;
+            position: relative;
+        }
+        
+        .ancient-physics-section h3 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .ancient-physics-section p {
+            color: #555;
+            line-height: 1.8;
+            text-indent: 2em;
+            margin-bottom: 15px;
+        }
+        
+        .ancient-physics-section:before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            background-image: url('https://img.icons8.com/ios-filled/50/3498db/confucianism.png');
+            background-size: contain;
+            opacity: 0.2;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #3498db;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .timeline-content h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid #3498db;
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(odd)::after {
+            right: -10px;
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+        
+        .invention-card {
+            display: flex;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .invention-image {
+            flex: 1;
+            min-width: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .invention-info {
+            flex: 2;
+            padding: 20px;
+        }
+        
+        .invention-info h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #3498db;
+            padding-bottom: 5px;
+        }
+        
+        .quote-box {
+            font-style: italic;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .quote-box:before {
+            content: """;
+            font-size: 4em;
+            position: absolute;
+            left: 5px;
+            top: -20px;
+            color: #3498db;
+            opacity: 0.3;
+        }
+        
+        </style>
+        
+        <!-- 添加动画效果库 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+        <!-- 添加图标库 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+        
+        <style>
+            /* 新增样式 */
+            .header-image {
+                width: 100%;
+                height: 200px;
+                background-image: url('https://img.freepik.com/free-photo/ancient-chinese-architecture_1417-1356.jpg');
+                background-size: cover;
+                background-position: center;
+                border-radius: 10px 10px 0 0;
+                margin-bottom: 20px;
+                position: relative;
+            }
+            
+            .header-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.5));
+                border-radius: 10px 10px 0 0;
+            }
+            
+            .header-text {
+                position: absolute;
+                bottom: 20px;
+                left: 20px;
+                color: white;
+                text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+            }
+            
+            .feature-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                margin: 30px 0;
+            }
+            
+            .feature-item {
+                background-color: #f8f9fa;
+                padding: 20px;
+                border-radius: 10px;
+                text-align: center;
+                box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+                transition: all 0.3s ease;
+            }
+            
+            .feature-item:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+            
+            .feature-icon {
+                font-size: 2.5em;
+                color: #3498db;
+                margin-bottom: 15px;
+            }
+            
+            .feature-title {
+                color: #2c3e50;
+                margin-bottom: 10px;
+                font-size: 1.2em;
+            }
+            
+            .comparison-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 30px 0;
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 12px 15px;
+                text-align: left;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .comparison-table th {
+                background-color: #f8f9fa;
+                color: #2c3e50;
+                font-weight: bold;
+            }
+            
+            .comparison-table tr:hover {
+                background-color: #f5f5f5;
+            }
+            
+            .image-gallery {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+                margin: 30px 0;
+            }
+            
+            .gallery-item {
+                position: relative;
+                overflow: hidden;
+                border-radius: 8px;
+                height: 200px;
+            }
+            
+            .gallery-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+            }
+            
+            .gallery-item:hover .gallery-image {
+                transform: scale(1.05);
+            }
+            
+            .gallery-caption {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(0,0,0,0.7);
+                color: white;
+                padding: 10px;
+                transform: translateY(100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .gallery-item:hover .gallery-caption {
+                transform: translateY(0);
+            }
+            
+            .interactive-element {
+                background-color: #f8f9fa;
+                padding: 20px;
+                border-radius: 10px;
+                margin: 30px 0;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            }
+            
+            .tab-container {
+                margin: 20px 0;
+            }
+            
+            .tab-buttons {
+                display: flex;
+                border-bottom: 1px solid #e0e0e0;
+                margin-bottom: 20px;
+            }
+            
+            .tab-button {
+                padding: 10px 20px;
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 1em;
+                color: #7f8c8d;
+                position: relative;
+            }
+            
+            .tab-button.active {
+                color: #3498db;
+                font-weight: bold;
+            }
+            
+            .tab-button.active::after {
+                content: '';
+                position: absolute;
+                bottom: -1px;
+                left: 0;
+                width: 100%;
+                height: 3px;
+                background-color: #3498db;
+            }
+            
+            .tab-content {
+                display: none;
+                padding: 10px;
+            }
+            
+            .tab-content.active {
+                display: block;
+                animation: fadeIn 0.5s ease;
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            
+            .footer {
+                text-align: center;
+                padding: 20px;
+                color: #7f8c8d;
+                font-size: 0.9em;
+                border-top: 1px solid #e0e0e0;
+                margin-top: 30px;
+            }
+            
+            .social-links {
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+                margin: 15px 0;
+            }
+            
+            .social-link {
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                background-color: #f8f9fa;
+                border-radius: 50%;
+                color: #3498db;
+                line-height: 40px;
+                text-align: center;
+                transition: all 0.3s ease;
+            }
+            
+            .social-link:hover {
+                background-color: #3498db;
+                color: white;
+                transform: translateY(-3px);
+            }
+            
+            .scroll-to-top {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+                background-color: #3498db;
+                color: white;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 40px;
+                cursor: pointer;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                z-index: 1000;
+            }
+            
+            .scroll-to-top.visible {
+                opacity: 1;
+            }
+            
+            .quiz-question {
+                margin-bottom: 20px;
+                padding: 15px;
+                background-color: #f8f9fa;
+                border-radius: 8px;
+            }
+            
+            .quiz-options {
+                margin-top: 10px;
+            }
+            
+            .quiz-options label {
+                display: block;
+                padding: 8px;
+                margin: 5px 0;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+            
+            .quiz-options label:hover {
+                background-color: #e9f7fe;
+                border-radius: 4px;
+            }
+            
+            .btn {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #3498db;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+            
+            .btn:hover {
+                background-color: #2980b9;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header-image">
+                <div class="header-overlay"></div>
+                <div class="header-text">
+                    <h2>探索中华文明的科学智慧</h2>
+                    <p>从古至今的物理学成就与创新</p>
+                </div>
+            </div>
+            
+            <h1>中国古代物理学信息可视化</h1>
+            <p>中国古代物理学是中华文明的重要组成部分，涵盖了力学、声学、光学、热学等多个领域。古人通过观察自然现象，发展出了许多先进的理论和实用技术，为世界科学发展做出了重要贡献。</p>
+            
+            <!-- 特色内容网格 -->
+            <div class="feature-grid">
+                <div class="feature-item animate__animated animate__fadeIn">
+                    <div class="feature-icon"><i class="fas fa-cogs"></i></div>
+                    <h3 class="feature-title">力学成就</h3>
+                    <p>从简单机械到复杂水利工程，中国古代在力学领域的应用广泛而精深。</p>
+                </div>
+                <div class="feature-item animate__animated animate__fadeIn" style="animation-delay: 0.2s">
+                    <div class="feature-icon"><i class="fas fa-wave-square"></i></div>
+                    <h3 class="feature-title">声学研究</h3>
+                    <p>从编钟到十二平均律，中国古代声学研究领先世界数百年。</p>
+                </div>
+                <div class="feature-item animate__animated animate__fadeIn" style="animation-delay: 0.4s">
+                    <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3 class="feature-title">光学发现</h3>
+                    <p>墨家学派对光的直线传播、小孔成像等现象进行了系统研究。</p>
+                </div>
+            </div>
+            
+            <!-- 概述部分 -->
+            <div class="ancient-physics-section">
+                <h3>中国古代物理学概述</h3>
+                <p>中国古代物理学思想可以追溯到先秦时期，《周易》中的阴阳五行学说为古代物理学奠定了哲学基础。中国古人在实践中积累了丰富的物理知识，并将其应用于农业、建筑、天文、医学等领域。</p>
+                <p>与西方物理学不同，中国古代物理学更注重整体性和实用性，强调天人合一的思想。虽然缺乏严格的数学表达，但其朴素唯物主义思想和辩证法思维对世界科学发展产生了深远影响。</p>
+                
+                <div class="quote-box">
+                    "天行健，君子以自强不息；地势坤，君子以厚德载物。" —— 《周易》
+                </div>
+            </div>
+            
+            <!-- 中西方物理学比较 -->
+            <h2>中西方古代物理学比较</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>特点</th>
+                        <th>中国古代物理学</th>
+                        <th>西方古代物理学</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>思维方式</td>
+                        <td>整体性、辩证性思维</td>
+                        <td>分析性、逻辑性思维</td>
+                    </tr>
+                    <tr>
+                        <td>研究目的</td>
+                        <td>实用导向，解决实际问题</td>
+                        <td>理论探索，寻求自然规律</td>
+                    </tr>
+                    <tr>
+                        <td>表达方式</td>
+                        <td>定性描述，哲学思辨</td>
+                        <td>数学表达，几何证明</td>
+                    </tr>
+                    <tr>
+                        <td>代表人物</td>
+                        <td>墨子、张衡、沈括</td>
+                        <td>亚里士多德、阿基米德</td>
+                    </tr>
+                    <tr>
+                        <td>主要成就</td>
+                        <td>地动仪、指南针、水利工程</td>
+                        <td>浮力原理、杠杆原理</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- 时间线 -->
+            <h2>中国古代物理学发展时间线</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>公元前4世纪</h4>
+                        <p>墨子创立墨家学派，《墨经》中记载了大量物理学知识，包括光学、力学等内容。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>公元1世纪</h4>
+                        <p>张衡发明地动仪，这是世界上第一台地震仪，体现了精密的力学原理。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>公元3世纪</h4>
+                        <p>马钧改进水车设计，发明水排，应用水力学原理。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>公元11世纪</h4>
+                        <p>沈括在《梦溪笔谈》中记录了大量物理学观察，包括磁偏角的发现。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>公元13世纪</h4>
+                        <p>郭守敬改进天文观测仪器，应用精密光学和力学原理。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>公元15世纪</h4>
+                        <p>宋应星《天工开物》记录了大量物理学应用，包括冶金、水利等技术。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 图片画廊 -->
+            <h2>古代物理学图像展示</h2>
+            <div class="image-gallery">
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Seismoscope_IMG_6714.JPG/800px-Seismoscope_IMG_6714.JPG" alt="地动仪复原模型" class="gallery-image">
+                    <div class="gallery-caption">地动仪复原模型</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Dujiangyan_irrigation_system.jpg/800px-Dujiangyan_irrigation_system.jpg" alt="都江堰水利工程" class="gallery-image">
+                    <div class="gallery-caption">都江堰水利工程</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Luban_lock.jpg/800px-Luban_lock.jpg" alt="鲁班锁" class="gallery-image">
+                    <div class="gallery-caption">鲁班锁 - 古代力学智慧的体现</div>
+                </div>
+            </div>
+            
+            <!-- 重要发明 -->
+            <h2>重要物理发明与发现</h2>
+            
+            <div class="invention-card">
+                <div class="invention-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Seismoscope_of_Zhang_Heng.jpg/300px-Seismoscope_of_Zhang_Heng.jpg');"></div>
+                <div class="invention-info">
+                    <h4>地动仪</h4>
+                    <p>东汉张衡发明的地动仪是世界上第一台地震仪，能够探测远处地震并指示方向。其内部机制运用了精密的力学平衡原理，当地震发生时，铜制的摆锤会因震动而摆动，触发机关使铜球从龙口落入蟾蜍口中，从而指示地震方向。</p>
+                    <p>地动仪的发明比西方早1700多年，体现了中国古代物理学的高度成就。</p>
+                </div>
+            </div>
+            
+            <div class="invention-card">
+                <div class="invention-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Zhu_Zaiyu_Equal_Temperament.png/300px-Zhu_Zaiyu_Equal_Temperament.png');"></div>
+                <div class="invention-info">
+                    <h4>十二平均律</h4>
+                    <p>明代朱载堉首次在世界上提出并精确计算了十二平均律，这是一项重要的声学成就。他通过精密计算，确定了相邻两音的频率比为2的12次方根（约1.0595），为音乐理论奠定了科学基础。</p>
+                    <p>这一发现比西方早将近一个世纪，体现了中国古代声学研究的先进性。</p>
+                </div>
+            </div>
+            
+            <div class="invention-card">
+                <div class="invention-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Mozi_and_Lu_Ban.jpg/300px-Mozi_and_Lu_Ban.jpg');"></div>
+                <div class="invention-info">
+                    <h4>小孔成像原理</h4>
+                    <p>墨子在《墨经》中首次记录了小孔成像现象，并正确解释了其原理："景到影，则光在后，景到光，则影在后。"这是世界上最早关于小孔成像的科学记载。</p>
+                    <p>墨家学派还研究了光的直线传播、反射定律等光学现象，为后世光学研究奠定了基础。</p>
+                </div>
+            </div>
+            
+            <div class="invention-card">
+                <div class="invention-image" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Sinan.JPG/300px-Sinan.JPG');"></div>
+                <div class="invention-info">
+                    <h4>指南针</h4>
+                    <p>中国是世界上最早发现磁性并将其应用于导航的国家。最早的指南针是"司南"，后来发展为"水浮针"和"干针"。指南针的发明体现了中国古人对磁学的深入研究。</p>
+                    <p>指南针的发明和改进对世界航海事业产生了革命性影响，是中国古代物理学对世界文明的重大贡献。</p>
+                </div>
+            </div>
+            
+            <!-- 交互式内容 -->
+            <div class="interactive-element">
+                <h2>探索中国古代物理学分支</h2>
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" data-tab="mechanics">力学</button>
+                        <button class="tab-button" data-tab="acoustics">声学</button>
+                        <button class="tab-button" data-tab="optics">光学</button>
+                        <button class="tab-button" data-tab="magnetism">磁学</button>
+                    </div>
+                    <div class="tab-content active" id="mechanics">
+                        <h3>中国古代力学</h3>
+                        <p>中国古代力学研究主要体现在简单机械的应用和水利工程的建设上。古人发明了各种杠杆、滑轮、齿轮等简单机械，并将其应用于农业生产和建筑工程中。</p>
+                        <p>《墨经》中记载了许多力学原理，如"力，刚也，刚，强也，强，胜也"，表明了墨家对力的本质有一定认识。此外，诸葛亮发明的"木牛流马"、马钧改进的水车等都体现了古人对力学原理的掌握和应用。</p>
+                    </div>
+                    <div class="tab-content" id="acoustics">
+                        <h3>中国古代声学</h3>
+                        <p>中国古代声学研究主要集中在乐律理论和乐器制作上。早在春秋战国时期，中国就建立了完整的五声音阶体系。</p>
+                        <p>《吕氏春秋》中记载了"黄钟之宫"的调音方法，《史记》中记载了伶伦取竹制管的故事。明代朱载堉提出的十二平均律是中国古代声学研究的巅峰，他通过精确计算确定了相邻两音的频率比，这比西方早将近一个世纪。</p>
+                    </div>
+                    <div class="tab-content" id="optics">
+                        <h3>中国古代光学</h3>
+                        <p>中国古代光学研究主要由墨家学派开创。《墨经》中记录了光的直线传播、小孔成像、平面镜反射等光学现象，如"光，景也"、"光，形之像也"等。</p>
+                        <p>此外，中国古人还发明了各种光学仪器，如汉代的"望远镜"、宋代的"照海镜"等。这些发明体现了古人对光学原理的理解和应用。</p>
+                    </div>
+                    <div class="tab-content" id="magnetism">
+                        <h3>中国古代磁学</h3>
+                        <p>中国是世界上最早发现和应用磁性的国家。早在战国时期，中国人就发现了磁石可以指南的特性，并制作了最早的指南工具"司南"。</p>
+                        <p>宋代沈括在《梦溪笔谈》中首次记录了磁偏角现象，指出磁针并非指向正北，而是偏向东北方向。这一发现比西方早数百年，是中国古代磁学研究的重要成就。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <h2>中国古代物理学的特点与贡献</h2>
+            
+            <div class="ancient-physics-section">
+                <h3>整体性思维</h3>
+                <p>中国古代物理学强调整体观察和系统思考，注重事物之间的相互联系和变化规律。这种整体性思维体现在"天人合一"的哲学观念中，认为自然界的各种现象都是相互关联的。</p>
+                <p>例如，古人通过观察天象变化来预测气候，通过研究五音相生来构建音律体系，这些都体现了整体性思维的特点。</p>
+            </div>
+            
+            <div class="ancient-physics-section">
+                <h3>实用主义导向</h3>
+                <p>中国古代物理学研究多以解决实际问题为目的，注重技术应用而非纯理论探索。这种实用主义导向使中国古代在农业水利、建筑、冶金等领域取得了显著成就。</p>
+                <p>如李冰父子设计的都江堰水利工程，运用了复杂的水力学原理，至今仍在发挥作用；指南针的发明和改进则体现了对磁学的深入研究和应用。</p>
+            </div>
+            
+            <div class="ancient-physics-section">
+                <h3>世界贡献</h3>
+                <p>中国古代物理学对世界科学发展做出了重要贡献。许多发明和发现比西方早数百年甚至上千年，如地震仪、指南针、火药、印刷术等。</p>
+                <p>这些成就通过丝绸之路等途径传播到世界各地，促进了人类文明的进步。尽管中国古代物理学缺乏系统的理论体系和数学表达，但其朴素唯物主义思想和辩证法思维对世界科学发展产生了深远影响。</p>
+            </div>
+            
+            <!-- 知识问答 -->
+            <h2>中国古代物理学知识问答</h2>
+            <div class="interactive-element">
+                <div id="quiz-container">
+                    <div class="quiz-question">
+                        <h3>1. 世界上第一台地震仪是谁发明的？</h3>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q1" value="a"> A. 诸葛亮</label><br>
+                            <label><input type="radio" name="q1" value="b"> B. 张衡</label><br>
+                            <label><input type="radio" name="q1" value="c"> C. 沈括</label><br>
+                            <label><input type="radio" name="q1" value="d"> D. 墨子</label>
+                        </div>
+                    </div>
+                    <div class="quiz-question">
+                        <h3>2. 《墨经》中记载了哪些物理学知识？</h3>
+                        <div class="quiz-options">
+                            <label><input type="checkbox" name="q2" value="a"> A. 光的直线传播</label><br>
+                            <label><input type="checkbox" name="q2" value="b"> B. 小孔成像原理</label><br>
+                            <label><input type="checkbox" name="q2" value="c"> C. 杠杆原理</label><br>
+                            <label><input type="checkbox" name="q2" value="d"> D. 声音传播原理</label>
+                        </div>
+                    </div>
+                    <button id="check-answers" class="btn">检查答案</button>
+                    <div id="quiz-results" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <!-- 页脚 -->
+            <div class="footer">
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-weibo"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-weixin"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-bilibili"></i></a>
+                </div>
+                <p>© 2023 中国古代物理学信息可视化 | 探索中华文明的科学智慧</p>
+                <p>本网页仅用于教育目的，内容参考各类历史文献和科学研究</p>
+            </div>
+        </div>
+        
+        <!-- 回到顶部按钮 -->
+        <div class="scroll-to-top">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+        
+        <script>
+            // 可以添加一些交互效果
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.querySelector('.timeline-content').style.transform = 'scale(1.05)';
+                    this.querySelector('.timeline-content').style.transition = 'all 0.3s ease';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.querySelector('.timeline-content').style.transform = 'scale(1)';
+                });
+            });
+            
+            document.querySelectorAll('.invention-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.transition = 'all 0.3s ease';
+                    this.style.boxShadow = '0 15px 30px rgba(0,0,0,0.15)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                });
+            });
+            
+            // 标签页切换
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    // 移除所有标签页和内容的active类
+                    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                    
+                    // 添加active类到当前点击的标签页
+                    this.classList.add('active');
+                    
+                    // 显示对应的内容
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // 知识问答功能
+            document.getElementById('check-answers').addEventListener('click', function() {
+                const results = document.getElementById('quiz-results');
+                let score = 0;
+                let feedback = '';
+                
+                // 检查问题1的答案
+                const q1Answer = document.querySelector('input[name="q1"]:checked');
+                if (q1Answer) {
+                    if (q1Answer.value === 'b') {
+                        score++;
+                        feedback += '<p>问题1: ✓ 正确！张衡发明了世界上第一台地震仪。</p>';
+                    } else {
+                        feedback += '<p>问题1: ✗ 错误。正确答案是B. 张衡。</p>';
+                    }
+                } else {
+                    feedback += '<p>问题1: 未作答。</p>';
+                }
+                
+                // 检查问题2的答案
+                const q2Answers = document.querySelectorAll('input[name="q2"]:checked');
+                const correctQ2 = ['a', 'b', 'c', 'd']; // 所有选项都是正确的
+                let q2Selected = Array.from(q2Answers).map(input => input.value);
+                let q2Correct = true;
+                
+                if (q2Selected.length > 0) {
+                    // 检查是否选择了所有正确答案且没有选择错误答案
+                    if (q2Selected.length !== correctQ2.length) {
+                        q2Correct = false;
+                    } else {
+                        for (let answer of q2Selected) {
+                            if (!correctQ2.includes(answer)) {
+                                q2Correct = false;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    if (q2Correct) {
+                        score++;
+                        feedback += '<p>问题2: ✓ 正确！《墨经》中确实记载了这些物理学知识。</p>';
+                    } else {
+                        feedback += '<p>问题2: ✗ 错误。《墨经》中记载了光的直线传播、小孔成像原理、杠杆原理和声音传播原理。</p>';
+                    }
+                } else {
+                    feedback += '<p>问题2: 未作答。</p>';
+                }
+                
+                // 显示结果
+                results.innerHTML = `<h3>得分: ${score}/${2}</h3>${feedback}`;
+                results.style.display = 'block';
+            });
+            
+            // 回到顶部按钮功能
+            const scrollToTopBtn = document.querySelector('.scroll-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            });
+            
+            scrollToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        </script>
+    </body>
+</html>
