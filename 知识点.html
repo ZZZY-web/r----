@@ -1,0 +1,346 @@
+<div class="container" style="max-width:1200px;margin:auto;padding:32px 18px;">
+    <h1 style="text-align:center;font-size:2.2em;margin-bottom:32px;letter-spacing:2px;">前端三大基础知识梳理</h1>
+    <div style="display: flex; gap: 28px; flex-wrap: wrap; margin-bottom: 38px;">
+        <div style="flex:1; min-width:260px; background:#e3f2fd; border-radius:14px; padding:26px 22px; box-shadow:0 4px 16px rgba(0,0,0,0.08); border-left:6px solid #1976d2;">
+            <h2 style="color:#1976d2; margin-bottom:12px;">HTML <span style="font-size:0.7em;color:#555;">（结构）</span></h2>
+            <ul style="line-height:2;">
+                <li>用于构建网页的<strong>结构骨架</strong>，决定页面元素的层次关系</li>
+                <li>常用标签：<code>&lt;div&gt;</code>、<code>&lt;p&gt;</code>、<code>&lt;a&gt;</code>、<code>&lt;img&gt;</code>、<code>&lt;form&gt;</code>等</li>
+                <li>语义化标签：<code>&lt;header&gt;</code>、<code>&lt;nav&gt;</code>、<code>&lt;main&gt;</code>、<code>&lt;footer&gt;</code>，提升可读性与SEO</li>
+zuzu                <li>表单与交互元素：<code>&lt;input&gt;</code>、<code>&lt;button&gt;</code>、<code>&lt;select&gt;</code></li>
+                <li>可访问性与SEO优化：合理使用标签和属性，方便辅助工具解析</li>
+                <li>嵌入多媒体：<code>&lt;audio&gt;</code>、<code>&lt;video&gt;</code>、<code>&lt;canvas&gt;</code></li>
+                <li>HTML5新特性：本地存储、音视频、语义标签</li>
+            </ul>
+        </div>
+        <div style="flex:1; min-width:260px; background:#e8f5e9; border-radius:14px; padding:26px 22px; box-shadow:0 4px 16px rgba(0,0,0,0.08); border-left:6px solid #388e3c;">
+            <h2 style="color:#388e3c; margin-bottom:12px;">CSS <span style="font-size:0.7em;color:#555;">（表现）</span></h2>
+            <ul style="line-height:2;">
+                <li>用于美化页面，控制<strong>样式与布局</strong></li>
+                <li>选择器、盒模型、层叠与继承</li>
+                <li>布局方式：<strong>Flexbox</strong>、<strong>Grid</strong>、定位、浮动</li>
+                <li>响应式设计：媒体查询、弹性单位（rem/em/vw/vh）</li>
+                <li>动画与过渡：<code>transition</code>、<code>animation</code>、<code>@keyframes</code></li>
+                <li>预处理器：Sass、Less，提升样式复用性与可维护性</li>
+                <li>媒体查询与移动端适配</li>
+            </ul>
+        </div>
+        <div style="flex:1; min-width:260px; background:#fff3e0; border-radius:14px; padding:26px 22px; box-shadow:0 4px 16px rgba(0,0,0,0.08); border-left:6px solid #f57c00;">
+            <h2 style="color:#f57c00; margin-bottom:12px;">JavaScript <span style="font-size:0.7em;color:#555;">（行为）</span></h2>
+            <ul style="line-height:2;">
+                <li>实现网页<strong>交互与动态效果</strong>，赋予页面“灵魂”</li>
+                <li>操作DOM、事件处理、异步编程</li>
+                <li>数据处理：变量、数组、对象、函数、ES6+新特性</li>
+                <li>Ajax/Fetch：与后端通信，实现数据动态加载</li>
+                <li>模块化开发：ES6 Module、CommonJS</li>
+                <li>前端安全：XSS、CSRF防护</li>
+            </ul>
+        </div>
+    </div>
+    <hr style="border:none;border-top:2px dashed #bdbdbd;margin:36px 0 28px 0;">
+    <h2 style="margin-top:0; color:#007bff;">三者关系与前端开发流程</h2>
+    <ol style="background:#f8f9fa; border-radius:10px; padding:22px 26px; font-size:1.08em;">
+        <li><strong>HTML</strong> 负责页面结构（骨架）</li>
+        <li><strong>CSS</strong> 负责页面样式（皮肤）</li>
+        <li><strong>JavaScript</strong> 负责页面交互（灵魂）</li>
+        <li>三者协作，构建完整、动态、优雅的网页</li>
+        <li>开发流程：结构 → 样式 → 行为，逐步完善页面</li>
+    </ol>
+    <div style="height:22px;"></div>
+    <h2 style="color:#6c3483; margin-top:22px;">现代前端框架与工程化简介</h2>
+    <div style="background:#f3e5f5; border-radius:10px; padding:18px 20px; margin-bottom:18px; border-left:5px solid #6c3483;">
+        <ul style="line-height:2;">
+            <li>主流框架：<strong>React</strong>、<strong>Vue</strong>、<strong>Angular</strong>，提升开发效率与体验</li>
+            <li>组件化开发：将页面拆分为可复用的独立模块</li>
+            <li>单页应用（SPA）：前后端分离，提升用户体验</li>
+            <li>工程化工具：Webpack、Vite、npm/yarn，自动化构建、依赖管理、热更新</li>
+            <li>代码管理与协作：Git、CI/CD</li>
+            <li>代码规范与自动化测试，保障项目质量</li>
+        </ul>
+    </div>
+    <h2 style="color:#0277bd; margin-top:38px;">React/Next.js（page.js）与前端三大基础的对比关系</h2>
+    <table style="width:100%;border-collapse:collapse;margin:24px 0 32px 0;font-size:1.05em;">
+      <thead>
+        <tr style="background:#e1f5fe;">
+          <th style="border:1px solid #bdbdbd;padding:10px;">方面</th>
+          <th style="border:1px solid #bdbdbd;padding:10px;">传统前端（HTML/CSS/JS）</th>
+          <th style="border:1px solid #bdbdbd;padding:10px;">React/Next.js（page.js/JSX）</th>
+          <th style="border:1px solid #bdbdbd;padding:10px;">联系与提升</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="border:1px solid #bdbdbd;padding:10px;">结构</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">用HTML标签搭建页面结构</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">用JSX在JS中写“类HTML”结构</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">JSX本质是JS里的HTML，结构更灵活</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #bdbdbd;padding:10px;">样式</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">用CSS文件/内联样式/class属性</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">用CSS/Tailwind，className属性设置样式</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">样式用法一致，支持更多样式方案</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #bdbdbd;padding:10px;">行为</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">用JS操作DOM、绑定事件</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">用JS（函数、变量、事件）管理组件逻辑</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">逻辑更集中，自动高效更新DOM</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #bdbdbd;padding:10px;">组织</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">结构、样式、行为分离</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">结构、样式、行为高度集成于组件</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">组件化开发，代码更易维护复用</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #bdbdbd;padding:10px;">渲染</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">浏览器直接解析HTML/CSS/JS</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">先由React/Next.js转译为HTML/CSS/JS再渲染</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">底层仍是三大基础，开发体验提升</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #bdbdbd;padding:10px;">交互</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">事件监听、DOM操作</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">事件直接写在JSX，状态驱动界面变化</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">交互更直观，状态管理更强大</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #bdbdbd;padding:10px;">适用场景</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">静态页面、小型交互</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">动态页面、复杂应用、SPA/SSR</td>
+          <td style="border:1px solid #bdbdbd;padding:10px;">适应更复杂的现代前端需求</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-bottom:18px;">
+      <strong>【结构】详细解释与示例：</strong>
+      <ul style="margin:10px 0 0 18px;">
+        <li>
+          <strong>传统HTML：</strong>
+          <div style="background:#f8f9fa;border-radius:6px;padding:10px 12px;margin:6px 0;">
+            <code>&lt;div class="box"&gt;你好，世界！&lt;/div&gt;</code>
+            <div style="margin-top:8px;padding:8px 0;">
+              <span style="display:inline-block;background:#e3f2fd;padding:6px 16px;border-radius:4px;border:1px solid #90caf9;">你好，世界！</span>
+            </div>
+          </div>
+        </li>
+        <li>
+          <strong>React/Next.js（JSX）：</strong>
+          <div style="background:#f8f9fa;border-radius:6px;padding:10px 12px;margin:6px 0;">
+            <code>{'<' }div className="box">{'你好，世界！<'}/div></code>
+            <div style="margin-top:8px;padding:8px 0;">
+              <span style="display:inline-block;background:#fff3e0;padding:6px 16px;border-radius:4px;border:1px solid #ffb74d;">你好，世界！</span>
+            </div>
+          </div>
+        </li>
+        <li>
+          <strong>说明：</strong> JSX 语法允许你在 JavaScript 代码中直接写“类 HTML”结构，属性名采用驼峰式（如 <code>className</code>），并可嵌入 JS 表达式（如 <code>{变量}</code>）。
+        </li>
+      </ul>
+    </div>
+    <div style="margin-bottom:18px;">
+      <strong>【行为】技术细节对比：</strong>
+      <ul style="margin:10px 0 0 18px;">
+        <li>
+          <strong>传统JS事件绑定：</strong>
+          <div style="background:#f8f9fa;border-radius:6px;padding:10px 12px;margin:6px 0;">
+            <code>&lt;button onclick="alert('hi')"&gt;点我&lt;/button&gt;</code>
+            <div style="margin-top:8px;">
+              <button onclick="alert('hi')" style="padding:6px 18px;border-radius:4px;background:#e3f2fd;border:1px solid #90caf9;cursor:pointer;">点我</button>
+            </div>
+          </div>
+        </li>
+        <li>
+          <strong>React事件绑定：</strong>
+          <div style="background:#f8f9fa;border-radius:6px;padding:10px 12px;margin:6px 0;">
+            <code>{'<' }button onClick={() =&gt; alert('hi')}>{'点我<'}/button></code>
+            <div style="margin-top:8px;">
+              <button onclick="alert('hi')" style="padding:6px 18px;border-radius:4px;background:#fff3e0;border:1px solid #ffb74d;cursor:pointer;">点我</button>
+            </div>
+          </div>
+        </li>
+        <li>
+          <strong>说明：</strong> React 事件采用驼峰命名（如 <code>onClick</code>），并直接传入函数，避免了全局污染和字符串解析，事件与组件状态高度集成。
+        </li>
+      </ul>
+    </div>
+    <div style="margin-bottom:18px;">
+      <strong>【渲染】深入对比：</strong>
+      <ul style="margin:10px 0 0 18px;">
+        <li>
+          <strong>传统：</strong> 浏览器直接解析 HTML/CSS/JS，开发者需手动操作 DOM。
+        </li>
+        <li>
+          <strong>React/Next.js：</strong> 组件状态变化时，React 自动高效地更新 DOM（虚拟DOM diff 算法），开发者只需关注数据和界面逻辑。
+        </li>
+      </ul>
+    </div>
+    <div style="margin-bottom:18px;">
+      <strong>【样式】代码与效果对比：</strong>
+      <ul style="margin:10px 0 0 18px;">
+        <li>
+          <strong>传统CSS：</strong>
+          <div style="background:#f8f9fa;border-radius:6px;padding:10px 12px;margin:6px 0;">
+            <code>
+              &lt;style&gt;<br>
+              .my-btn { background: #1976d2; color: #fff; border-radius: 4px; padding: 6px 18px; border: none; }<br>
+              &lt;/style&gt;<br>
+              &lt;button class="my-btn"&gt;按钮&lt;/button&gt;
+            </code>
+            <div style="margin-top:8px;">
+              <button style="background:#1976d2;color:#fff;border-radius:4px;padding:6px 18px;border:none;">按钮</button>
+            </div>
+          </div>
+        </li>
+        <li>
+          <strong>React/Tailwind：</strong>
+          <div style="background:#f8f9fa;border-radius:6px;padding:10px 12px;margin:6px 0;">
+            <code>{'<' }button className="bg-blue-600 text-white rounded px-4 py-1.5">{'按钮<'}/button></code>
+            <div style="margin-top:8px;">
+              <button style="background:#1976d2;color:#fff;border-radius:4px;padding:6px 18px;border:none;">按钮</button>
+            </div>
+          </div>
+        </li>
+        <li>
+          <strong>说明：</strong> Tailwind等原子类库让样式直接写在标签上，React也支持传统CSS方式，开发更灵活。
+        </li>
+      </ul>
+    </div>
+    <div style="margin-bottom:18px;">
+      <strong>【组织/渲染】可视化说明：</strong>
+      <div style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;">
+        <div style="flex:1;min-width:220px;">
+          <div style="background:#f8f9fa;border-radius:6px;padding:12px 14px;margin-bottom:6px;">
+            <strong>传统开发流程：</strong>
+            <pre style="font-size:0.98em;">HTML结构
+↓
+CSS样式
+↓
+JS行为
+↓
+手动操作DOM</pre>
+          </div>
+        </div>
+        <div style="flex:1;min-width:220px;">
+          <div style="background:#f8f9fa;border-radius:6px;padding:12px 14px;margin-bottom:6px;">
+            <strong>React组件开发：</strong>
+            <pre style="font-size:0.98em;">组件 = 结构(JSX) + 样式 + 行为
+↓
+状态驱动渲染
+↓
+React自动更新DOM</pre>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:6px;color:#555;">React/Next.js将结构、样式、行为高度集成，开发者只需关注数据和组件逻辑。</div>
+    </div>
+    <div style="margin-bottom:18px;">
+      <strong>【状态驱动/数据绑定】小例子：</strong>
+      <ul style="margin:10px 0 0 18px;">
+        <li>
+          <strong>传统JS：</strong>
+          <div style="background:#f8f9fa;border-radius:6px;padding:10px 12px;margin:6px 0;">
+            <code>
+              &lt;input id="num" type="text" value="1"&gt;<br>
+              &lt;button onclick="document.getElementById('num').value++;"&gt;+1&lt;/button&gt;
+            </code>
+            <div style="margin-top:8px;">
+              <input id="num" type="text" value="1" style="width:38px;text-align:center;" />
+              <button onclick="document.getElementById('num').value++;" style="margin-left:8px;padding:2px 10px;">+1</button>
+            </div>
+            <div style="color:#888;font-size:0.97em;margin-top:4px;">
+              <span>每次点击按钮，JS手动获取input并修改其value。</span>
+            </div>
+          </div>
+        </li>
+        <li>
+          <strong>React useState：</strong>
+          <div style="background:#f8f9fa;border-radius:6px;padding:10px 12px;margin:6px 0;">
+            <code>
+              const [num, setNum] = useState(1);<br>
+              {'<' }input value={num} readOnly /{'>'}<br>
+              {'<' }button onClick={() =&gt; setNum(num+1)}{'>'}+1{'<'}/button{'>'}
+            </code>
+            <div style="margin-top:8px;">
+              <input id="num2" type="text" value="1" style="width:38px;text-align:center;" readonly />
+              <button onclick="var i=document.getElementById('num2');i.value=Number(i.value)+1;" style="margin-left:8px;padding:2px 10px;">+1</button>
+            </div>
+            <div style="color:#888;font-size:0.97em;margin-top:4px;">
+              <span>React中，num是状态，setNum修改状态后界面自动刷新，无需手动操作DOM。</span>
+            </div>
+          </div>
+        </li>
+        <li>
+          <strong>说明：</strong> 传统JS需要手动操作DOM，React通过useState等钩子自动驱动界面刷新，开发体验和可维护性大幅提升。
+        </li>
+      </ul>
+    </div>
+    <div style="margin-bottom:18px;">
+      <strong>【适用场景】真实案例：</strong>
+      <div style="display:flex;gap:24px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:220px;background:#e3f2fd;border-radius:8px;padding:12px 14px;">
+          <span style="font-size:1.2em;">🔹</span> <strong>传统三大件：</strong>
+          <ul style="margin:8px 0 0 18px;">
+            <li>简单静态页面（如企业官网、活动页）</li>
+            <li>无需复杂交互的内容展示</li>
+            <li>快速原型、低门槛入门</li>
+          </ul>
+        </div>
+        <div style="flex:1;min-width:220px;background:#fff3e0;border-radius:8px;padding:12px 14px;">
+          <span style="font-size:1.2em;">⚛️</span> <strong>React/Next.js：</strong>
+          <ul style="margin:8px 0 0 18px;">
+            <li>大型动态应用（如后台管理、社交平台）</li>
+            <li>需要复杂交互、状态管理的项目</li>
+            <li>单页应用（SPA）、服务端渲染（SSR）</li>
+            <li>团队协作、组件复用需求高</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p style="background:#e3f2fd; border-radius:8px; padding:16px 18px; font-size:1.08em; border-left:4px solid #1976d2;">
+    <strong>总结：</strong>React/Next.js 是对 HTML、CSS、JS 的高级封装和组织，三者的基础知识依然是核心。现代前端开发让结构、样式、行为更加高效集成，开发大型应用更加便捷和规范。掌握基础，理解框架原理，才能灵活应对各种前端开发场景。
+    </p>
+    <!-- 知识库扩展区域 -->
+    <section style="margin-top:48px; background:#f1f8e9; border-radius:16px; padding:36px 28px; box-shadow:0 4px 18px #e0e0e0;">
+        <h2 style="color:#388e3c; text-align:center; margin-bottom:24px; letter-spacing:1px;">前端知识库一览</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:22px; justify-content:center;">
+            <div style="flex:1; min-width:240px; background:#e3f2fd; border-radius:12px; padding:22px 18px; box-shadow:0 2px 8px rgba(0,0,0,0.06); border-left:4px solid #1976d2;">
+                <h3 style="color:#1976d2;">HTML</h3>
+                <ul style="line-height:2;">
+                    <li>页面结构与语义、常用标签、表单、媒体嵌入</li>
+                    <li>可访问性与SEO优化</li>
+                    <li>HTML5新特性</li>
+                </ul>
+            </div>
+            <div style="flex:1; min-width:240px; background:#e8f5e9; border-radius:12px; padding:22px 18px; box-shadow:0 2px 8px rgba(0,0,0,0.06); border-left:4px solid #388e3c;">
+                <h3 style="color:#388e3c;">CSS</h3>
+                <ul style="line-height:2;">
+                    <li>样式美化与布局：Flex、Grid、响应式</li>
+                    <li>选择器、盒模型、层叠与继承</li>
+                    <li>动画、过渡、预处理器</li>
+                </ul>
+            </div>
+            <div style="flex:1; min-width:240px; background:#fff3e0; border-radius:12px; padding:22px 18px; box-shadow:0 2px 8px rgba(0,0,0,0.06); border-left:4px solid #f57c00;">
+                <h3 style="color:#f57c00;">JavaScript</h3>
+                <ul style="line-height:2;">
+                    <li>交互逻辑与数据处理、DOM操作、事件、异步编程</li>
+                    <li>模块化、ES6+、API调用</li>
+                    <li>前端安全</li>
+                </ul>
+            </div>
+            <div style="flex:1; min-width:240px; background:#f3e5f5; border-radius:12px; padding:22px 18px; box-shadow:0 2px 8px rgba(0,0,0,0.06); border-left:4px solid #6c3483;">
+                <h3 style="color:#6c3483;">现代框架/工程化</h3>
+                <ul style="line-height:2;">
+                    <li>主流框架：React、Vue、Angular</li>
+                    <li>组件化、SPA、前后端分离</li>
+                    <li>自动化构建、代码管理与协作</li>
+                </ul>
+            </div>
+        </div>
+        <div style="height:22px;"></div>
+        <div style="margin-top:22px; background:#fffde7; border-radius:10px; padding:18px 20px; font-size:1.05em; border-left:4px solid #fbc02d;">
+            <strong>小结：</strong> 前端开发以HTML、CSS、JavaScript为基础，现代框架和工程化工具极大提升了开发效率与体验。打好基础，持续学习新技术，才能在前端领域不断进阶。
+        </div>
+    </section>
+</div>

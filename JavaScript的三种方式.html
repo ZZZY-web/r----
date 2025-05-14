@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript的三种使用方式</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #3498db;
+            margin-top: 30px;
+        }
+        .example {
+            background-color: #f9f9f9;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            padding: 10px;
+            background-color: #e8f4f8;
+            border-radius: 4px;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+        code {
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+        }
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+    
+    <!-- 第一种方式：在head标签中使用<script>标签 -->
+    <script>
+        // 定义一个函数，用于在页面加载后显示当前时间
+        function showCurrentTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent = now.toLocaleTimeString();
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>JavaScript的三种使用方式</h1>
+        
+        <h2>1. 在&lt;head&gt;标签中使用&lt;script&gt;标签</h2>
+        <div class="example">
+            <p>这种方式将JavaScript代码放在HTML文档的&lt;head&gt;部分。</p>
+            <p>优点：代码集中管理，可以在页面加载前定义函数和变量。</p>
+            <p>缺点：如果脚本较大，可能会延迟页面的加载和渲染。</p>
+            <button class="btn" onclick="showCurrentTime()">显示当前时间</button>
+            <div class="result">当前时间：<span id="current-time">点击按钮显示</span></div>
+            <pre><code>&lt;head&gt;
+    &lt;script&gt;
+        function showCurrentTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent = now.toLocaleTimeString();
+        }
+    &lt;/script&gt;
+&lt;/head&gt;</code></pre>
+        </div>
+        
+        <h2>2. 在&lt;body&gt;标签中使用&lt;script&gt;标签</h2>
+        <div class="example">
+            <p>这种方式将JavaScript代码放在HTML文档的&lt;body&gt;部分，通常在页面内容的底部。</p>
+            <p>优点：不会阻塞页面渲染，可以在页面加载后立即执行。</p>
+            <p>缺点：如果在页面顶部引用，可能会找不到尚未加载的DOM元素。</p>
+            <button class="btn" id="change-color-btn">改变背景颜色</button>
+            <div class="result" id="color-result">点击按钮改变此区域的背景颜色</div>
+            <pre><code>&lt;body&gt;
+    &lt;!-- 页面内容 --&gt;
+    
+    &lt;script&gt;
+        document.getElementById('change-color-btn').addEventListener('click', function() {
+            const result = document.getElementById('color-result');
+            const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+            result.style.backgroundColor = randomColor;
+            result.textContent = '背景颜色已更改为: ' + randomColor;
+        });
+    &lt;/script&gt;
+&lt;/body&gt;</code></pre>
+        </div>
+        
+        <h2>3. 引用外部JavaScript文件</h2>
+        <div class="example">
+            <p>这种方式通过&lt;script&gt;标签的src属性引用外部的.js文件。</p>
+            <p>优点：代码可重用，便于维护，可以被浏览器缓存，减少加载时间。</p>
+            <p>缺点：需要额外的HTTP请求来获取文件。</p>
+            <button class="btn" id="calculate-btn">计算</button>
+            <div class="result" id="calculation-result">
+                <input type="number" id="num1" placeholder="数字1" style="width: 80px;">
+                <select id="operator">
+                    <option value="+">+</option>
+                    <option value="-">-</option>
+                    <option value="*">×</option>
+                    <option value="/">÷</option>
+                </select>
+                <input type="number" id="num2" placeholder="数字2" style="width: 80px;">
+                <span> = </span>
+                <span id="result">?</span>
+            </div>
+            <pre><code>&lt;script src="calculator.js"&gt;&lt;/script&gt;</code></pre>
+            <p>外部文件 calculator.js 的内容：</p>
+            <pre><code>document.getElementById('calculate-btn').addEventListener('click', function() {
+    const num1 = parseFloat(document.getElementById('num1').value);
+    const num2 = parseFloat(document.getElementById('num2').value);
+    const operator = document.getElementById('operator').value;
+    let result;
+    
+    switch(operator) {
+        case '+': result = num1 + num2; break;
+        case '-': result = num1 - num2; break;
+        case '*': result = num1 * num2; break;
+        case '/': result = num1 / num2; break;
+    }
+    
+    document.getElementById('result').textContent = isNaN(result) ? '请输入有效数字' : result;
+});</code></pre>
+        </div>
+        
+        <div class="example">
+            <h3>总结</h3>
+            <p>JavaScript的三种使用方式各有优缺点：</p>
+            <ul>
+                <li>在&lt;head&gt;中使用：适合定义全局函数和变量，但可能延迟页面加载。</li>
+                <li>在&lt;body&gt;底部使用：不会阻塞页面渲染，适合操作DOM元素。</li>
+                <li>引用外部文件：代码可重用，便于维护，可以被缓存，是最推荐的方式。</li>
+            </ul>
+            <p>在实际开发中，通常会结合使用这三种方式，根据具体需求选择最合适的方式。</p>
+        </div>
+    </div>
+    
+    <!-- 添加页脚 -->
+    <footer style="text-align: center; margin-top: 30px; padding: 20px; background-color: #f0f0f0; border-top: 1px solid #ddd;">
+        <p>© 2023 JavaScript学习指南 | 版权所有</p>
+        <p>联系我们：example@example.com</p>
+    </footer>
+    
+    <!-- 第二种方式：在body标签底部使用<script>标签 -->
+    <script>
+        // 为改变背景颜色按钮添加点击事件
+        document.getElementById('change-color-btn').addEventListener('click', function() {
+            const result = document.getElementById('color-result');
+            const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+            result.style.backgroundColor = randomColor;
+            result.textContent = '背景颜色已更改为: ' + randomColor;
+        });
+    </script>
+    
+    <!-- 第三种方式：引用外部JavaScript文件 -->
+    <script>
+        // 这里模拟引用外部文件的效果
+        // 实际使用时应该是 <script src="calculator.js"></script>
+        document.getElementById('calculate-btn').addEventListener('click', function() {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const operator = document.getElementById('operator').value;
+            let result;
+            
+            switch(operator) {
+                case '+': result = num1 + num2; break;
+                case '-': result = num1 - num2; break;
+                case '*': result = num1 * num2; break;
+                case '/': result = num1 / num2; break;
+            }
+            
+            document.getElementById('result').textContent = isNaN(result) ? '请输入有效数字' : result;
+        });
+    </script>
+</body>
+</html>

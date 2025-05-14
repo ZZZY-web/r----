@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 练习</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #444;
+            margin-top: 25px;
+        }
+        .exercise {
+            background-color: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px 0;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        input, select {
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+        .output {
+            background-color: #e9f7ef;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JavaScript 练习</h1>
+        
+        <h2>1. 变量和数据类型</h2>
+        <div class="exercise">
+            <p>创建不同类型的变量并显示它们的类型</p>
+            <button onclick="showVariableTypes()">显示变量类型</button>
+            <div id="variableOutput" class="output"></div>
+        </div>
+
+        <h2>2. 运算符</h2>
+        <div class="exercise">
+            <p>计算器：输入两个数字，选择运算符，计算结果</p>
+            <input type="number" id="num1" placeholder="第一个数字">
+            <select id="operator">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="/">/</option>
+            </select>
+            <input type="number" id="num2" placeholder="第二个数字">
+            <button onclick="calculate()">计算</button>
+            <div id="calculatorOutput" class="output"></div>
+        </div>
+
+        <h2>3. 条件语句</h2>
+        <div class="exercise">
+            <p>输入年龄，判断是儿童、青少年、成年人还是老年人</p>
+            <input type="number" id="age" placeholder="输入年龄">
+            <button onclick="checkAge()">检查</button>
+            <div id="ageOutput" class="output"></div>
+        </div>
+
+        <h2>4. 循环</h2>
+        <div class="exercise">
+            <p>生成斐波那契数列的前N项</p>
+            <input type="number" id="fibCount" placeholder="输入数量" value="10">
+            <button onclick="generateFibonacci()">生成</button>
+            <div id="fibOutput" class="output"></div>
+        </div>
+
+        <h2>5. 函数</h2>
+        <div class="exercise">
+            <p>创建一个函数计算圆的面积和周长</p>
+            <input type="number" id="radius" placeholder="输入半径">
+            <button onclick="calculateCircle()">计算</button>
+            <div id="circleOutput" class="output"></div>
+        </div>
+
+        <h2>6. 数组操作</h2>
+        <div class="exercise">
+            <p>数组排序和过滤</p>
+            <button onclick="arrayOperations()">执行数组操作</button>
+            <div id="arrayOutput" class="output"></div>
+        </div>
+
+        <h2>7. 对象</h2>
+        <div class="exercise">
+            <p>创建和操作对象</p>
+            <button onclick="objectOperations()">操作对象</button>
+            <div id="objectOutput" class="output"></div>
+        </div>
+
+        <h2>8. DOM 操作</h2>
+        <div class="exercise">
+            <p>点击按钮改变下面文本的颜色和内容</p>
+            <button onclick="changeDomElement()">改变文本</button>
+            <p id="domText">这是一段可以被JavaScript改变的文本</p>
+        </div>
+
+        <h2>9. 事件处理</h2>
+        <div class="exercise">
+            <p>鼠标悬停效果</p>
+            <div id="hoverBox" style="width: 200px; height: 100px; background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                在我上面悬停鼠标
+            </div>
+        </div>
+
+        <h2>10. 错误处理</h2>
+        <div class="exercise">
+            <p>尝试除以零，并捕获错误</p>
+            <input type="number" id="dividend" placeholder="被除数">
+            <input type="number" id="divisor" placeholder="除数">
+            <button onclick="divideNumbers()">除法运算</button>
+            <div id="divisionOutput" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 变量和数据类型
+        function showVariableTypes() {
+            const stringVar = "这是一个字符串";
+            const numberVar = 42;
+            const booleanVar = true;
+            const arrayVar = [1, 2, 3, 4];
+            const objectVar = { name: "小明", age: 25 };
+            const nullVar = null;
+            let undefinedVar;
+            
+            let output = `
+                字符串: ${stringVar} (${typeof stringVar})<br>
+                数字: ${numberVar} (${typeof numberVar})<br>
+                布尔值: ${booleanVar} (${typeof booleanVar})<br>
+                数组: [${arrayVar}] (${typeof arrayVar})<br>
+                对象: ${JSON.stringify(objectVar)} (${typeof objectVar})<br>
+                Null: ${nullVar} (${typeof nullVar})<br>
+                Undefined: ${undefinedVar} (${typeof undefinedVar})<br>
+            `;
+            
+            document.getElementById("variableOutput").innerHTML = output;
+        }
+
+        // 2. 运算符
+        function calculate() {
+            const num1 = parseFloat(document.getElementById("num1").value);
+            const num2 = parseFloat(document.getElementById("num2").value);
+            const operator = document.getElementById("operator").value;
+            let result;
+            
+            if (isNaN(num1) || isNaN(num2)) {
+                document.getElementById("calculatorOutput").innerHTML = "请输入有效的数字";
+                return;
+            }
+            
+            switch(operator) {
+                case "+":
+                    result = num1 + num2;
+                    break;
+                case "-":
+                    result = num1 - num2;
+                    break;
+                case "*":
+                    result = num1 * num2;
+                    break;
+                case "/":
+                    result = num1 / num2;
+                    break;
+            }
+            
+            document.getElementById("calculatorOutput").innerHTML = `${num1} ${operator} ${num2} = ${result}`;
+        }
+
+        // 3. 条件语句
+        function checkAge() {
+            const age = parseInt(document.getElementById("age").value);
+            let category;
+            
+            if (isNaN(age)) {
+                document.getElementById("ageOutput").innerHTML = "请输入有效的年龄";
+                return;
+            }
+            
+            if (age < 0) {
+                category = "无效年龄";
+            } else if (age <= 12) {
+                category = "儿童";
+            } else if (age <= 18) {
+                category = "青少年";
+            } else if (age <= 65) {
+                category = "成年人";
+            } else {
+                category = "老年人";
+            }
+            
+            document.getElementById("ageOutput").innerHTML = `年龄 ${age} 属于: ${category}`;
+        }
+
+        // 4. 循环
+        function generateFibonacci() {
+            const count = parseInt(document.getElementById("fibCount").value);
+            
+            if (isNaN(count) || count <= 0) {
+                document.getElementById("fibOutput").innerHTML = "请输入大于0的数字";
+                return;
+            }
+            
+            let fibonacci = [0, 1];
+            
+            if (count === 1) {
+                fibonacci = [0];
+            } else {
+                for (let i = 2; i < count; i++) {
+                    fibonacci[i] = fibonacci[i-1] + fibonacci[i-2];
+                }
+            }
+            
+            document.getElementById("fibOutput").innerHTML = `斐波那契数列的前 ${count} 项: ${fibonacci.join(", ")}`;
+        }
+
+        // 5. 函数
+        function calculateCircle() {
+            const radius = parseFloat(document.getElementById("radius").value);
+            
+            if (isNaN(radius) || radius <= 0) {
+                document.getElementById("circleOutput").innerHTML = "请输入大于0的半径";
+                return;
+            }
+            
+            // 计算圆的面积和周长的函数
+            function circleArea(r) {
+                return Math.PI * r * r;
+            }
+            
+            function circlePerimeter(r) {
+                return 2 * Math.PI * r;
+            }
+            
+            const area = circleArea(radius);
+            const perimeter = circlePerimeter(radius);
+            
+            document.getElementById("circleOutput").innerHTML = `
+                半径: ${radius}<br>
+                面积: ${area.toFixed(2)}<br>
+                周长: ${perimeter.toFixed(2)}
+            `;
+        }
+
+        // 6. 数组操作
+        function arrayOperations() {
+            const numbers = [34, 7, 23, 32, 5, 62, 19, 11];
+            
+            // 排序
+            const sortedAsc = [...numbers].sort((a, b) => a - b);
+            const sortedDesc = [...numbers].sort((a, b) => b - a);
+            
+            // 过滤
+            const evenNumbers = numbers.filter(num => num % 2 === 0);
+            const oddNumbers = numbers.filter(num => num % 2 !== 0);
+            
+            // 映射
+            const doubled = numbers.map(num => num * 2);
+            
+            // 归约
+            const sum = numbers.reduce((total, num) => total + num, 0);
+            
+            document.getElementById("arrayOutput").innerHTML = `
+                原始数组: [${numbers.join(", ")}]<br>
+                升序排序: [${sortedAsc.join(", ")}]<br>
+                降序排序: [${sortedDesc.join(", ")}]<br>
+                偶数: [${evenNumbers.join(", ")}]<br>
+                奇数: [${oddNumbers.join(", ")}]<br>
+                所有元素乘2: [${doubled.join(", ")}]<br>
+                所有元素之和: ${sum}
+            `;
+        }
+
+        // 7. 对象
+        function objectOperations() {
+            // 创建一个学生对象
+            const student = {
+                name: "张三",
+                age: 20,
+                grades: {
+                    math: 90,
+                    english: 85,
+                    science: 92
+                },
+                calculateAverage: function() {
+                    const sum = this.grades.math + this.grades.english + this.grades.science;
+                    return sum / 3;
+                }
+            };
+            
+            // 添加新属性
+            student.id = "S12345";
+            
+            // 修改属性
+            student.grades.english = 88;
+            
+            // 计算平均分
+            const average = student.calculateAverage();
+            
+            document.getElementById("objectOutput").innerHTML = `
+                学生信息:<br>
+                姓名: ${student.name}<br>
+                年龄: ${student.age}<br>
+                学号: ${student.id}<br>
+                数学成绩: ${student.grades.math}<br>
+                英语成绩: ${student.grades.english}<br>
+                科学成绩: ${student.grades.science}<br>
+                平均分: ${average.toFixed(2)}
+            `;
+        }
+
+        // 8. DOM 操作
+        let textToggle = false;
+        function changeDomElement() {
+            const textElement = document.getElementById("domText");
+            
+            if (textToggle) {
+                textElement.style.color = "black";
+                textElement.textContent = "这是一段可以被JavaScript改变的文本";
+            } else {
+                textElement.style.color = "blue";
+                textElement.textContent = "文本已被JavaScript改变了！";
+            }
+            
+            textToggle = !textToggle;
+        }
+
+        // 9. 事件处理
+        const hoverBox = document.getElementById("hoverBox");
+        
+        hoverBox.addEventListener("mouseover", function() {
+            this.style.backgroundColor = "#4CAF50";
+            this.style.color = "white";
+            this.textContent = "鼠标悬停中...";
+        });
+        
+        hoverBox.addEventListener("mouseout", function() {
+            this.style.backgroundColor = "#ddd";
+            this.style.color = "black";
+            this.textContent = "在我上面悬停鼠标";
+        });
+
+        // 10. 错误处理
+        function divideNumbers() {
+            const dividend = parseFloat(document.getElementById("dividend").value);
+            const divisor = parseFloat(document.getElementById("divisor").value);
+            let result;
+            
+            if (isNaN(dividend) || isNaN(divisor)) {
+                document.getElementById("divisionOutput").innerHTML = "请输入有效的数字";
+                return;
+            }
+            
+            try {
+                if (divisor === 0) {
+                    throw new Error("除数不能为零");
+                }
+                result = dividend / divisor;
+                document.getElementById("divisionOutput").innerHTML = `${dividend} / ${divisor} = ${result}`;
+            } catch (error) {
+                document.getElementById("divisionOutput").innerHTML = `<span class="error">错误: ${error.message}</span>`;
+            } finally {
+                console.log("除法运算已尝试执行");
+            }
+        }
+    </script>
+</body>
+</html>

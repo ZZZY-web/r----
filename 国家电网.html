@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国家电网有限公司 - 官方网站</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #0056a4;
+            --secondary-color: #00a651;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --accent-color: #ff9e1b;
+        }
+        
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* 顶部导航栏 */
+        .top-bar {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 0;
+            font-size: 14px;
+        }
+        
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+        
+        .top-bar a:hover {
+            color: #e0e0e0;
+        }
+        
+        /* 主导航栏 */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand img {
+            height: 50px;
+        }
+        
+        .navbar-nav .nav-link {
+            color: var(--dark-color);
+            font-weight: 500;
+            padding: 10px 15px;
+            transition: color 0.3s;
+        }
+        
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: var(--primary-color);
+        }
+        
+        /* 轮播图 */
+@charset "UTF-8";
+
+            :root {
+                --primary-color: #0056a4;  /* 国家电网蓝色 */
+                --secondary-color: #00a651;  /* 绿色 */
+                --light-color: #f8f9fa;
+                --dark-color: #343a40;
+                --accent-color: #ff9e1b;  /* 橙色强调色 */
+            }
+            
+            /* 轮播图优化 */
+            .carousel-item {
+                height: 500px;
+                background-size: cover;
+                background-position: center;
+                position: relative;
+            }
+            
+            .carousel-caption {
+                background-color: rgba(0, 86, 164, 0.7);  /* 半透明蓝色背景 */
+                padding: 25px;
+                border-radius: 5px;
+                max-width: 600px;
+                margin: 0 auto;
+                bottom: 80px;
+            }
+            
+            .carousel-caption h2 {
+                font-size: 28px;
+                font-weight: 700;
+                margin-bottom: 15px;
+            }
+            
+            .carousel-caption p {
+                font-size: 16px;
+                line-height: 1.6;
+            }
+            
+            /* 科技创新部分优化 */
+            .tech-feature {
+                background-color: white;
+                border-radius: 10px;
+                padding: 25px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+                height: 100%;
+                transition: transform 0.3s;
+            }
+            
+            .tech-feature:hover {
+                transform: translateY(-5px);
+            }
+            
+            .tech-icon {
+                width: 60px;
+                height: 60px;
+                background-color: var(--primary-color);
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 20px;
+                font-size: 24px;
+            }
+            
+            /* 导航栏优化 */
+            .navbar {
+                background-color: white;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                padding: 10px 0;
+            }
+            
+            .navbar-brand img {
+                height: 50px;
+            }
+            
+            .navbar-nav .nav-link {
+                color: var(--dark-color);
+                font-weight: 500;
+                padding: 10px 20px;
+                transition: color 0.3s;
+                position: relative;
+            }
+            
+            .navbar-nav .nav-link:after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                background-color: var(--primary-color);
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                transition: width 0.3s;
+            }
+            
+            .navbar-nav .nav-link:hover:after,
+            .navbar-nav .nav-link.active:after {
+                width: 80%;
+            }
+            
+            .navbar-nav .nav-link:hover,
+            .navbar-nav .nav-link.active {
+                color: var(--primary-color);
+            }
+        </style>
+        
+        <!-- 轮播图修复 -->
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="background-image: url('https://www.sgcc.com.cn/html/sgcc/col2016111615/2023-03/06/20230306105130493309637_img.jpg');">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2>建设世界一流能源互联网企业</h2>
+                    <p>以电为中心，以客户为中心，建设运营好坚强智能电网</p>
+                    <button class="btn btn-primary">了解更多</button>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('https://www.sgcc.com.cn/html/sgcc/col2016111615/2023-03/06/20230306105130493309637_img.jpg');">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2>推动能源转型 服务绿色发展</h2>
+                    <p>加快构建清洁低碳、安全高效的能源体系</p>
+                    <button class="btn btn-primary">了解更多</button>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('https://www.sgcc.com.cn/html/sgcc/col2016111615/2023-03/06/20230306105130493309637_img.jpg');">
+                <div class="carousel-caption d-none d-md-block">
+                    <h2>科技创新引领发展</h2>
+                    <p>加强关键核心技术攻关，推动能源电力QUALITY_OF_SERVICE_ITEM_NAME_1，推动能源电力QUALITY_OF_SERVICE_ITEM_NAME_2。公司拥有国家重点实验室、国家工程实验室等一批国家级创新平台，在特高压输电、智能电网、新能源并网等领域取得了一系列重大科技成果。</p>
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill me-2" style="color: var(--secondary-color); font-size: 24px;"></i>
+                                <div>特高压输电技术</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill me-2" style="color: var(--secondary-color); font-size: 24px;"></i>
+                                <div>智能电网技术</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill me-2" style="color: var(--secondary-color); font-size: 24px;"></i>
+                                <div>新能源并网技术</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle-fill me-2" style="color: var(--secondary-color); font-size: 24px;"></i>
+                                <div>能源互联网技术</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary mt-3">了解更多</a>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- 快速链接 -->
+    <div class="container">
+        <div class="row quick-links">
+            <div class="col-md-3 col-6">
+                <div class="quick-link-item">
+                    <div class="quick-link-icon">
+                        <i class="bi bi-lightning-charge"></i>
+                    </div>
+                    <div class="quick-link-text">电费查询</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="quick-link-item">
+                    <div class="quick-link-icon">
+                        <i class="bi bi-tools"></i>
+                    </div>
+                    <div class="quick-link-text">故障报修</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="quick-link-item">
+                    <div class="quick-link-icon">
+                        <i class="bi bi-person-plus"></i>
+                    </div>
+                    <div class="quick-link-text">业务办理</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="quick-link-item">
+                    <div class="quick-link-icon">
+                        <i class="bi bi-geo-alt"></i>
+                    </div>
+                    <div class="quick-link-text">营业厅查询</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 关于我们 -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="mb-4" style="color: var(--primary-color);">关于国家电网</h2>
+                    <p class="lead mb-4">国家电网有限公司是关系国民经济命脉和国家能源安全的特大型国有重点骨干企业。</p>
+                    <p class="mb-4">公司承担着保障安全、经济、清洁、可持续电力供应的基本使命，经营区域覆盖26个省（自治区、直辖市），覆盖国土面积的88%，供电服务人口超过11亿人。</p>
+                    <p class="mb-4">公司注册资本8295亿元，资产总额4.2万亿元，2022年位列《财富》世界500强第3位。</p>
+                    <a href="#" class="btn btn-primary">查看更多</a>
+                </div>
+                <div class="col-lg-6 mt-4 mt-lg-0">
+                    <img src="D:/桌面/图片.jpg" alt="国家电网总部" class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 业务服务 -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 style="color: var(--primary-color);">业务服务</h2>
+                <p class="lead">为客户提供全方位的电力服务解决方案</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card service-card">
+                        <img src="https://www.sgcc.com.cn/html/sgcc/col2016111615/2023-03/06/20230306105130493309637_img.jpg" class="card-img-top" alt="电网建设">
+                        <div class="card-body">
+                            <h5 class="card-title">电网建设与运营</h5>
+                            <p class="card-text">建设运营坚强智能电网，保障安全可靠供电，提高电网运行效率和智能化水平。</p>
+                            <a href="#" class="btn btn-outline-primary">了解详情</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card service-card">
+                        <img src="https://www.sgcc.com.cn/html/sgcc/col2016111615/2023-03/06/20230306105130493309637_img.jpg" class="card-img-top" alt="新能源">
+                        <div class="card-body">
+                            <h5 class="card-title">新能源并网服务</h5>
+                            <p class="card-text">提供风电、光伏等新能源并网服务，促进清洁能源消纳，助力能源转型。</p>
+                            <a href="#" class="btn btn-outline-primary">了解详情</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card service-card">
+                        <img src="https://www.sgcc.com.cn/html/sgcc/col2016111615/2023-03/06/20230306105130493309637_img.jpg" class="card-img-top" alt="综合能源">
+                        <div class="card-body">
+                            <h5 class="card-title">综合能源服务</h5>
+                            <p class="card-text">提供能源规划、节能诊断、分布式能源、能效管理等一站式综合能源服务。</p>
+                            <a href="#" class="btn btn-outline-primary">了解详情</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card service-card">
+                        <img src="https://www.sgcc.com.cn/html/sgcc/col2016111615/2023-03/06/20230306105130493309637_img.jpg" class="card-img-top" alt="电动汽车">
+                        <div class="card-body">
+                            <h5 class="card-title">电动汽车服务</h5>
+                            <p class="card-text">建设运营电动汽车充电网络，提供充电、运营、支付等全方位服务。</p>
+                            <a href="#" class="btn btn-outline-primary">了解详情</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card service-card">
+                        <img src="https://www.sgcc.com.cn/html/sgcc/col2016111615/2023-03/06/20230306105130493309637_img.jpg" class="card-img-top" alt="国际业务">
+                        <div class="card-body">
+                            <h5 class="card-title">国际业务</h5>
+                            <p class="card-text">开展国际电力项目投资、建设与运营，提供电力技术与装备出口服务。</p>
+                            <a href="#" class="btn btn-outline-primary">了解详情</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card service-card">
+                        <img src="https://www.sgcc.com.cn/html/sgcc/col2016111615/2023-03/06/20230306105130493309637_img.jpg" class="card-img-top" alt="金融服务">
+                        <div class="card-body">
+                            <h5 class="card-title">金融服务</h5>
+                            <p class="card-text">提供保险、融资租赁、信托、基金等多元化金融服务，支持电力产业发展。</p>
+                            <a href="#" class="btn btn-outline-primary">了解详情</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 数据统计 -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-6">
+                    <div class="stats-item">
+                        <div class="stats-number">8295亿</div>
+                        <div class="stats-text">注册资本</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stats-item">
+                        <div class="stats-number">4.2万亿</div>
+                        <div class="stats-text">资产总额</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stats-item">
+                        <div class="stats-number">11亿+</div>
+                        <div class="stats-text">服务人口</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stats-item">
+                        <div class="stats-number">第3位</div>
+                        <div class="stats-text">世界500强排名</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 新闻中心 -->
+    <section class="py-5">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 style="color: var(--primary-color);">新闻中心</h2>
+                <a href="#" class="btn btn-outline-primary">查看更多</a>
+            </div>
+            <div class="row news-list">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card">
+                        <img src="https://www.sgcc.com.cn/html/sgcc/col2016111615/2023-03/06/20230306105130493309637_img.jpg" class="card-img-top" alt="新闻图片">
+                        <div class="card-body">
+                            <h5 class="card-title">国家电网公司召开2023年工作会议</h5>
+                            <p class="card-text">会议强调，要全面贯彻淀
+           

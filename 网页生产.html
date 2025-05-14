@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能内容生成器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        
+        .main-content {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .sidebar {
+            flex: 1;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content-area {
+            flex: 3;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .template-list {
+            margin-top: 20px;
+        }
+        
+        .template-item {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .template-item:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .template-item h3 {
+            margin-bottom: 5px;
+            color: #3498db;
+        }
+        
+        .output-section {
+            margin-top: 30px;
+        }
+        
+        .output-content {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            min-height: 300px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .tab-container {
+            margin-bottom: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            background-color: #f5f5f5;
+            margin-right: 5px;
+            transition: all 0.3s;
+        }
+        
+        .tab:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .tab.active {
+            background-color: #fff;
+            border-color: #ddd;
+            border-bottom-color: #fff;
+            margin-bottom: -1px;
+            font-weight: bold;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .history-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .history-item:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #333;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .toast.show {
+            opacity: 1;
+        }
+        
+        .format-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+        
+        .format-btn {
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+        
+        .topic-suggestion {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .suggestion-tag {
+            background-color: #e1f0fa;
+            color: #3498db;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .suggestion-tag:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .close-modal:hover {
+            color: #333;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar, .content-area {
+                flex: none;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .action-buttons button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>智能内容生成器</h1>
+            <p>快速生成高质量内容，提高创作效率</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="sidebar">
+                <h2>内容模板</h2>
+                <div class="template-list">
+                    <div class="template-item" data-template="article">
+                        <h3>文章</h3>
+                        <p>生成完整的文章内容，包括标题、引言、正文和结论</p>
+                    </div>
+                    <div class="template-item" data-template="blog">
+                        <h3>博客</h3>
+                        <p>生成博客风格的内容，包括个人观点和经验分享</p>
+                    </div>
+                    <div class="template-item" data-template="social">
+                        <h3>社交媒体</h3>
+                        <p>生成适合社交媒体平台的简短内容</p>
+                    </div>
+                    <div class="template-item" data-template="product">
+                        <h3>产品描述</h3>
+                        <p>生成吸引人的产品描述和卖点</p>
+                    </div>
+                    <div class="template-item" data-template="email">
+                        <h3>邮件</h3>
+                        <p>生成专业的邮件内容，包括主题和正文</p>
+                    </div>
+                </div>
+                
+                <h2 style="margin-top: 30px;">历史记录</h2>
+                <div id="history-list">
+                    <!-- 历史记录将在这里动态生成 -->
+                </div>
+            </div>
+            
+            <div class="content-area">
+                <div class="tab-container">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="generator">内容生成</div>
+                        <div class="tab" data-tab="editor">内容编辑</div>
+                        <div class="tab" data-tab="settings">设置</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="generator-tab">
+                        <div class="form-group">
+                            <label for="content-type">内容类型</label>
+                            <select id="content-type">
+                                <option value="article">文章</option>
+                                <option value="blog">博客</option>
+                                <option value="social">社交媒体</option>
+                                <option value="product">产品描述</option>
+                                <option value="email">邮件</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="topic">主题</label>
+                            <input type="text" id="topic" placeholder="输入内容主题">
+                            <div class="topic-suggestion" id="topic-suggestions">
+                                <!-- 主题建议将在这里动态生成 -->
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="keywords">关键词（用逗号分隔）</label>
+                            <input type="text" id="keywords" placeholder="输入关键词，用逗号分隔">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tone">语调</label>
+                            <select id="tone">
+                                <option value="professional">专业</option>
+                                <option value="casual">随意</option>
+                                <option value="humorous">幽默</option>
+                                <option value="serious">严肃</option>
+                                <option value="enthusiastic">热情</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="length">内容长度</label>
+                            <select id="length">
+                                <option value="short">短（约200字）</option>
+                                <option value="medium" selected>中（约500字）</option>
+                                <option value="long">长（约1000字）</option>
+                                <option value="very-long">很长（约2000字）</option>
+                            </select>
+                        </div>
+                        
+                        <button id="generate-btn">生成内容</button>
+                        
+                        <div class="loading" id="loading-indicator">
+                            <div class="loading-spinner"></div>
+                            <p>正在生成内容，请稍候...</p>
+                        </div>
+                        
+                        <div class="output-section">
+                            <h2>生成结果</h2>
+                            <div class="output-content" id="output-content">
+                                <!-- 生成的内容将显示在这里 -->
+                                <p>您生成的内容将显示在这里。请填写上面的表单并点击"生成内容"按钮。</p>
+                            </div>
+                            
+                            <div class="action-buttons">
+                                <button id="copy-btn">复制内容</button>
+                                <button id="save-btn">保存到历史</button>
+                                <button id="edit-btn">编辑内容</button>
+                                <button id="download-btn">下载内容</button>
+                                <button id="analyze-btn">内容分析</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="editor-tab">
+                        <div class="form-group">
+                            <label for="editor-title">标题</label>
+                            <input type="text" id="editor-title" placeholder="输入内容标题">
+                        </div>
+                        
+                        <div class="format-toolbar">
+                            <button class="format-btn" id="format-bold">加粗</button>
+                            <button class="format-btn" id="format-italic">斜体</button>
+                            <button class="format-btn" id="format-heading">标题</button>
+                            <button class="format-btn" id="format-list">列表</button>
+                            <button class="format-btn" id="format-link">链接</button>
+                            <button class="format-btn" id="format-quote">引用</button>
+                            <button class="format-btn" id="format-clear">清除格式</button>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editor-content">内容</label>
+                            <textarea id="editor-content" placeholder="在这里编辑内容"></textarea>
+                        </div>
+                        
+                        <button id="update-content-btn">更新内容</button>
+                    </div>
+                    
+                    <div class="tab-content" id="settings-tab">
+                        <div class="form-group">
+                            <label for="default-tone">默认语调</label>
+                            <select id="default-tone">
+                                <option value="professional">专业</option>
+                                <option value="casual">随意</option>
+                                <option value="humorous">幽默</option>
+                                <option value="serious">严肃</option>
+                                <option value="enthusiastic">热情</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="default-length">默认内容长度</label>
+                            <select id="default-length">
+                                <option value="short">短（约200字）</option>
+                                <option value="medium" selected>中（约500字）</option>
+                                <option value="long">长（约1000字）</option>
+                                <option value="very-long">很长（约2000字）</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="max-history">最大历史记录数</label>
+                            <input type="number" id="max-history" value="10" min="1" max="50">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="auto-save">自动保存</label>
+                            <select id="auto-save">
+                                <option value="true">启用</option>
+                                <option value="false" selected>禁用</option>
+                            </select>
+                        </div>
+                        
+                        <button id="save-settings-btn">保存设置</button>
+                        <button id="clear-history-btn" style="background-color: #e74c3c; margin-left: 10px;">清除历史记录</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="toast" id="toast-message"></div>
+    
+    <div class="modal" id="analysis-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-analysis">&times;</span>
+            <h2 style="margin-bottom: 20px; color: #3498db;">内容分析</h2>
+            <div id="analysis-result">
+                <!-- 分析结果将在这里显示 -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化变量
+            let contentHistory = JSON.parse(localStorage.getItem('contentHistory')) || [];
+            let settings = JSON.parse(localStorage.getItem('settings')) || {
+                defaultTone: 'professional',
+                defaultLength: 'medium',
+                maxHistory: 10,
+                autoSave: false
+            };
+            
+            // 主题建议数据
+            const topicSuggestions = {
+                'article': ['人工智能发展趋势', '可持续发展与环保', '健康生活方式', '职场技能提升', '数字化转型'],
+                'blog': ['我的环球旅行', '美食探索之旅', '读书心得分享', '生活方式改变', '个人成长历程'],
+                'social': ['新产品发布', '限时活动通知', '行业热点分析', '用户故事分享', '节日祝福'],
+                'product': ['智能手机', '健康监测产品', '学习工具套装', '户外运动装备', '办公效率工具'],
+                'email': ['业务合作邀请', '产品更新通知', '客户满意度调查', '会议邀请函', '感谢信']
+            };
+            
+            // 加载设置
+            document.getElementById('default-tone').value = settings.defaultTone;
+            document.getElementById('default-length').value = settings.defaultLength;
+            document.getElementById('max-history').value = settings.maxHistory;
+            document.getElementById('auto-save').value = settings.autoSave.toString();
+            document.getElementById('tone').value = settings.defaultTone;
+            document.getElementById('length').value = settings.defaultLength;
+            
+            // 加载历史记录
+            updateHistoryList();
+            
+            // 更新主题建议
+            updateTopicSuggestions(document.getElementById('content-type').value);
+            
+            // 标签切换
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // 移除所有标签的active类
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // 添加当前标签的active类
+                    this.classList.add('active');
+                    
+                    // 隐藏所有内容
+                    const tabContents = document.querySelectorAll('.tab-content');
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // 显示当前标签对应的内容
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId + '-tab').classList.add('active');
+                });
+            });
+            
+            // 内容类型变更时更新主题建议
+            document.getElementById('content-type').addEventListener('change', function() {
+                updateTopicSuggestions(this.value);
+            });
+            
+            // 模板选择
+            const templateItems = document.querySelectorAll('.template-item');
+            templateItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const template = this.getAttribute('data-template');
+                    document.getElementById('content-type').value = template;
+                    
+                    // 更新主题建议
+                    updateTopicSuggestions(template);
+                    
+                    // 根据模板类型设置默认主题
+                    switch(template) {
+                        case 'article':
+                            document.getElementById('topic').value = '如何提高工作效率';
+                            document.getElementById('keywords').value = '效率,时间管理,工作方法,生产力';
+                            break;
+                        case 'blog':
+                            document.getElementById('topic').value = '我的旅行经历';
+                            document.getElementById('keywords').value = '旅行,体验,文化,风景';
+                            break;
+                        case 'social':
+                            document.getElementById('topic').value = '新产品发布';
+                            document.getElementById('keywords').value = '新品,发布,特性,优惠';
+                            break;
+                        case 'product':
+                            document.getElementById('topic').value = '智能手机';
+                            document.getElementById('keywords').value = '性能,外观,价格,功能';
+                            break;
+                        case 'email':
+                            document.getElementById('topic').value = '业务合作邀请';
+                            document.getElementById('keywords').value = '合作,机会,方案,联系';
+                            break;
+                    }
+                    
+                    // 切换到生成器标签
+                    document.querySelector('.tab[data-tab="generator"]').click();
+                });
+            });
+            
+            // 生成内容按钮
+            document.getElementById('generate-btn').addEventListener('click', function() {
+                const contentType = document.getElementById('content-type').value;
+                const topic = document.getElementById('topic').value;
+                const keywords = document.getElementById('keywords').value;
+                const tone = document.getElementById('tone').value;
+                const length = document.getElementById('length').value;
+                
+                if (!topic) {
+                    showToast('请输入内容主题');
+                    return;
+                }
+                
+                // 显示加载指示器
+                document.getElementById('loading-indicator').style.display = 'block';
+                
+                // 模拟内容生成过程（实际应用中可以替换为API调用）
+                setTimeout(() => {
+                    const generatedContent = generateContent(contentType, topic, keywords, tone, length);
+                    document.getElementById('output-content').innerHTML = generatedContent;
+                    document.getElementById('loading-indicator').style.display = 'none';
+                    
+                    // 如果启用了自动保存，则自动保存到历史记录
+                    if (settings.autoSave) {
+                        saveToHistory();
+                    }
+                }, 1500);
+            });
+            
+            // 复制内容按钮
+            document.getElementById('copy-btn').addEventListener('click', function() {
+                const content = document.getElementById('output-content').innerText;
+                navigator.clipboard.writeText(content).then(() => {
+                    showToast('内容已复制到剪贴板');
+                });
+            });
+            
+            // 保存到历史按钮
+            document.getElementById('save-btn').addEventListener('click', saveToHistory);
+            
+            // 编辑内容按钮
+            document.getElementById('edit-btn').addEventListener('click', function() {
+                const content = document.getElementById('output-content').innerHTML;
+                const topic = document.getElementById('topic').value || '未命名内容';
+                
+                document.getElementById('editor-title').value = topic;
+                document.getElementById('editor-content').value = content.replace(/<[^>]*>/g, '');
+                
+                // 切换到编辑器标签
+                document.querySelector('.tab[data-tab="editor"]').click();
+            });
+            
+            // 下载内容按钮
+            document.getElementById('download-btn').addEventListener('click', function() {
+                const content = document.getElementById('output-content').innerText;
+                const topic = document.getElementById('topic').value || '未命名内容';
+                
+                const blob = new Blob([content], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = topic.replace(/\s+/g, '_') + '.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                showToast('内容已下载');
+            });
+            
+            // 内容分析按钮
+            document.getElementById('analyze-btn').addEventListener('click', function() {
+                const content = document.getElementById('output-content').innerText;
+                
+                if (content.includes('您生成的内容将显示在这里')) {
+                    showToast('没有内容可分析');
+                    return;
+                }
+                
+                // 内容分析
+                const wordCount = content.replace(/\s+/g, ' ').split(' ').length;
+                const charCount = content.replace(/\s+/g, '').length;
+                const paragraphCount = content.split(/\n\s*\n/).length;
+                const readingTime = Math.ceil(wordCount / 300);
+                
+                // 关键词分析
+                const keywords = document.getElementById('keywords').value.split(',').map(k => k.trim()).filter(k => k);
+                const keywordOccurrences = {};
+                
+                keywords.forEach(keyword => {
+                    const regex = new RegExp(keyword, 'gi');
+                    const matches = content.match(regex);
+                    keywordOccurrences[keyword] = matches ? matches.length : 0;
+                });
+                
+                // 显示分析结果
+                const analysisResult = document.getElementById('analysis-result');
+                analysisResult.innerHTML = `
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="margin-bottom: 10px;">基本统计</h3>
+                        <p><strong>字数统计：</strong> ${wordCount} 字</p>
+                        <p><strong>字符统计：</strong> ${charCount} 个字符</p>
+                        <p><strong>段落数量：</strong> ${paragraphCount} 段</p>
+                        <p><strong>估计阅读时间：</strong> 约 ${readingTime} 分钟</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="margin-bottom: 10px;">内容信息</h3>
+                        <p><strong>内容类型：</strong> ${getContentTypeName(document.getElementById('content-type').value)}</p>
+                        <p><strong>语调风格：</strong> ${document.getElementById('tone').options[document.getElementById('tone').selectedIndex].text}</p>
+                        <p><strong>内容长度：</strong> ${document.getElementById('length').options[document.getElementById('length').selectedIndex].text}</p>
+                    </div>
+                `;
+                
+                // 如果有关键词，显示关键词分析
+                if (keywords.length > 0) {
+                    let keywordAnalysis = `
+                        <div>
+                            <h3 style="margin-bottom: 10px;">关键词分析</h3>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr style="background-color: #f5f5f5;">
+                                    <th style="padding: 8px; text-align: left; border: 1px solid #ddd;">关键词</th>
+                                    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">出现次数</th>
+                                </tr>
+                    `;
+                    
+                    keywords.forEach(keyword => {
+                        keywordAnalysis += `
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${keyword}</td>
+                                <td style="padding: 8px; text-align: center; border: 1px solid #ddd;">${keywordOccurrences[keyword]}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    keywordAnalysis += `</table></div>`;
+                    analysisResult.innerHTML += keywordAnalysis;
+                }
+                
+                // 显示分析模态框
+                document.getElementById('analysis-modal').style.display = 'flex';
+            });
+            
+            // 关闭分析模态框
+            document.getElementById('close-analysis').addEventListener('click', function() {
+                document.getElementById('analysis-modal').style.display = 'none';
+                        });
+            
+            // 更新内容按钮
+            document.getElementById('update-content-btn').addEventListener('click', function() {
+                const title = document.getElementById('editor-title').value;
+                const content = document.getElementById('editor-content').value;
+                
+                document.getElementById('topic').value = title;
+                document.getElementById('output-content').innerText = content;
+                
+                // 切换到生成器标签
+                document.querySelector('.tab[data-tab="generator"]').click();
+                
+                showToast('内容已更新');
+            });
+            
+            // 格式化按钮
+            document.getElementById('format-bold').addEventListener('click', function() {
+                formatText('**', '**');
+            });
+            
+            document.getElementById('format-italic').addEventListener('click', function() {
+                formatText('*', '*');
+            });
+            
+            document.getElementById('format-heading').addEventListener('click', function() {
+                formatText('## ', '');
+            });
+            
+            document.getElementById('format-list').addEventListener('click', function() {
+                formatText('- ', '');
+            });
+            
+            document.getElementById('format-link').addEventListener('click', function() {
+                const url = prompt('请输入链接URL:');
+                if (url) {
+                    formatText('[', '](' + url + ')');
+                }
+            });
+            
+            document.getElementById('format-quote').addEventListener('click', function() {
+                formatText('> ', '');
+            });
+            
+            document.getElementById('format-clear').addEventListener('click', function() {
+                const textarea = document.getElementById('editor-content');
+                const selectedText = textarea.value.substring(textarea.selectionStart, textarea.selectionEnd);
+                
+                // 移除所有Markdown格式
+                const cleanText = selectedText
+                    .replace(/\*\*(.*?)\*\*/g, '$1') // 移除加粗
+                    .replace(/\*(.*?)\*/g, '$1')     // 移除斜体
+                    .replace(/##\s(.*?)(?:\n|$)/g, '$1\n') // 移除标题
+                    .replace(/- (.*?)(?:\n|$)/g, '$1\n')   // 移除列表
+                    .replace(/\[(.*?)\]\((.*?)\)/g, '$1')  // 移除链接
+                    .replace(/>\s(.*?)(?:\n|$)/g, '$1\n'); // 移除引用
+                
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+                
+                textarea.value = textarea.value.substring(0, start) + cleanText + textarea.value.substring(end);
+                textarea.focus();
+                textarea.selectionStart = start;
+                textarea.selectionEnd = start + cleanText.length;
+            });
+            
+            // 保存设置按钮
+            document.getElementById('save-settings-btn').addEventListener('click', function() {
+                settings.defaultTone = document.getElementById('default-tone').value;
+                settings.defaultLength = document.getElementById('default-length').value;
+                settings.maxHistory = parseInt(document.getElementById('max-history').value);
+                settings.autoSave = document.getElementById('auto-save').value === 'true';
+                
+                localStorage.setItem('settings', JSON.stringify(settings));
+                
+                document.getElementById('tone').value = settings.defaultTone;
+                document.getElementById('length').value = settings.defaultLength;
+                
+                showToast('设置已保存');
+            });
+            
+            // 清除历史记录按钮
+            document.getElementById('clear-history-btn').addEventListener('click', function() {
+                if (confirm('确定要清除所有历史记录吗？此操作不可撤销。')) {
+                    contentHistory = [];
+                    localStorage.setItem('contentHistory', JSON.stringify(contentHistory));
+                    updateHistoryList();
+                    showToast('历史记录已清除');
+                }
+            });
+            
+            // 辅助函数
+            function updateHistoryList() {
+                const historyList = document.getElementById('history-list');
+                historyList.innerHTML = '';
+                
+                if (contentHistory.length === 0) {
+                    historyList.innerHTML = '<p style="padding: 10px; color: #777;">暂无历史记录</p>';
+                    return;
+                }
+                
+                contentHistory.forEach(item => {
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'history-item';
+                    historyItem.innerHTML = `
+                        <strong>${item.topic}</strong>
+                        <div style="font-size: 12px; color: #777;">${item.date} | ${getContentTypeName(item.type)}</div>
+                    `;
+                    
+                    historyItem.addEventListener('click', function() {
+                        document.getElementById('topic').value = item.topic;
+                        document.getElementById('content-type').value = item.type;
+                        document.getElementById('output-content').innerHTML = item.content;
+                        
+                        // 切换到生成器标签
+                        document.querySelector('.tab[data-tab="generator"]').click();
+                    });
+                    
+                    historyList.appendChild(historyItem);
+                });
+            }
+            
+            function updateTopicSuggestions(contentType) {
+                const suggestionsContainer = document.getElementById('topic-suggestions');
+                suggestionsContainer.innerHTML = '';
+                
+                const suggestions = topicSuggestions[contentType] || [];
+                
+                suggestions.forEach(suggestion => {
+                    const tag = document.createElement('span');
+                    tag.className = 'suggestion-tag';
+                    tag.textContent = suggestion;
+                    
+                    tag.addEventListener('click', function() {
+                        document.getElementById('topic').value = suggestion;
+                    });
+                    
+                    suggestionsContainer.appendChild(tag);
+                });
+            }
+            
+            function formatText(prefix, suffix) {
+                const textarea = document.getElementById('editor-content');
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+                const selectedText = textarea.value.substring(start, end);
+                const replacement = prefix + selectedText + suffix;
+                
+                textarea.value = textarea.value.substring(0, start) + replacement + textarea.value.substring(end);
+                textarea.focus();
+                textarea.selectionStart = start + prefix.length;
+                textarea.selectionEnd = start + prefix.length + selectedText.length;
+            }
+            
+            function saveToHistory() {
+                const content = document.getElementById('output-content').innerHTML;
+                const topic = document.getElementById('topic').value || '未命名内容';
+                const contentType = document.getElementById('content-type').value;
+                
+                if (content.includes('您生成的内容将显示在这里')) {
+                    showToast('没有内容可保存');
+                    return;
+                }
+                
+                // 添加到历史记录
+                const historyItem = {
+                    id: Date.now(),
+                    topic: topic,
+                    content: content,
+                    type: contentType,
+                    date: new Date().toLocaleString()
+                };
+                
+                contentHistory.unshift(historyItem);
+                
+                // 限制历史记录数量
+                if (contentHistory.length > settings.maxHistory) {
+                    contentHistory = contentHistory.slice(0, settings.maxHistory);
+                }
+                
+                // 保存到本地存储
+                localStorage.setItem('contentHistory', JSON.stringify(contentHistory));
+                
+                // 更新历史记录列表
+                updateHistoryList();
+                
+                showToast('内容已保存到历史记录');
+            }
+            
+            function showToast(message) {
+                const toast = document.getElementById('toast-message');
+                toast.textContent = message;
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+            
+            function getContentTypeName(type) {
+                const types = {
+                    'article': '文章',
+                    'blog': '博客',
+                    'social': '社交媒体',
+                    'product': '产品描述',
+                    'email': '邮件'
+                };
+                
+                return types[type] || type;
+            }
+            
+            // 内容生成函数
+            function generateContent(type, topic, keywords, tone, length) {
+                // 解析关键词
+                const keywordArray = keywords.split(',').map(k => k.trim()).filter(k => k);
+                
+                // 根据内容类型生成不同的内容
+                let content = '';
+                
+                // 根据语调调整内容风格
+                let toneStyle = '';
+                switch(tone) {
+                    case 'professional':
+                        toneStyle = '专业、正式';
+                        break;
+                    case 'casual':
+                        toneStyle = '轻松、随意';
+                        break;
+                    case 'humorous':
+                        toneStyle = '幽默、风趣';
+                        break;
+                    case 'serious':
+                        toneStyle = '严肃、认真';
+                        break;
+                    case 'enthusiastic':
+                        toneStyle = '热情、积极';
+                        break;
+                }
+                
+                // 根据长度确定内容量
+                let contentLength = '';
+                switch(length) {
+                    case 'short':
+                        contentLength = '简短';
+                        break;
+                    case 'medium':
+                        contentLength = '适中';
+                        break;
+                    case 'long':
+                        contentLength = '详细';
+                        break;
+                    case 'very-long':
+                        contentLength = '非常详细';
+                        break;
+                }
+                
+                // 根据内容类型生成模板
+                switch(type) {
+                    case 'article':
+                        content = generateArticle(topic, keywordArray, toneStyle, contentLength);
+                        break;
+                    case 'blog':
+                        content = generateBlog(topic, keywordArray, toneStyle, contentLength);
+                        break;
+                    case 'social':
+                        content = generateSocial(topic, keywordArray, toneStyle, contentLength);
+                        break;
+                    case 'product':
+                        content = generateProduct(topic, keywordArray, toneStyle, contentLength);
+                        break;
+                    case 'email':
+                        content = generateEmail(topic, keywordArray, toneStyle, contentLength);
+                        break;
+                    default:
+                        content = `<p>未能识别的内容类型: ${type}</p>`;
+                }
+                
+                return content;
+            }
+            
+            function generateArticle(topic, keywords, tone, length) {
+                return `
+                    <h2>${topic}</h2>
+                    <p><strong>引言：</strong>在当今快节奏的社会中，${topic}已经成为人们关注的焦点。本文将从多个角度探讨这一主题，帮助读者更好地理解其中的关键点。</p>
+                    
+                    <h3>${keywords[0] || '主要观点'}</h3>
+                    <p>${topic}的核心在于理解其基本原理。首先，我们需要认识到这一领域的重要性和影响力。无论是在个人发展还是社会进步方面，掌握相关知识都能带来显著的好处。</p>
+                    
+                    <h3>${keywords[1] || '深入分析'}</h3>
+                    <p>进一步探讨这个话题，我们可以发现许多值得关注的细节。专家研究表明，在实践中应用这些知识可以提高效率、减少错误并获得更好的结果。这种${tone}的方法已经被许多成功案例所证实。</p>
+                    
+                    <h3>${keywords[2] || '实用建议'}</h3>
+                    <p>基于以上分析，以下是一些实用的建议：</p>
+                    <ul>
+                        <li>定期学习和更新相关知识</li>
+                        <li>实践中应用理论，不断总结经验</li>
+                        <li>与他人分享和交流，获取不同视角</li>
+                        <li>保持${tone}的态度，持续改进方法</li>
+                    </ul>
+                    
+                    <h3>结论</h3>
+                    <p>总而言之，${topic}是一个值得深入研究的领域。通过本文的介绍，希望读者能够对这一主题有更加清晰的认识，并在实际生活中受益。记住，持续学习和实践是掌握任何知识的关键。</p>
+                `;
+            }
+            
+            function generateBlog(topic, keywords, tone, length) {
+                return `
+                    <h2>${topic}</h2>
+                    <p>大家好！今天我想和大家分享一下关于${topic}的一些个人经验和想法。作为一个对这个领域充满热情的人，我希望我的分享能够给你带来一些启发。</p>
+                    
+                    <h3>我的${keywords[0] || '初次体验'}</h3>
+                    <p>还记得我第一次接触${topic}的时候，那种感觉真的很特别。${tone}地说，这段经历彻底改变了我对这个领域的看法，也让我开始了一段奇妙的探索之旅。</p>
+                    
+                    <h3>${keywords[1] || '关键发现'}</h3>
+                    <p>在深入研究的过程中，我发现了一些非常有趣的事情。原来${topic}并不像表面看起来那么简单，它包含了许多细微的细节和深层次的内涵。这些发现让我对整个领域有了更加全面的理解。</p>
+                    
+                    <h3>${keywords[2] || '个人心得'}</h3>
+                    <p>经过一段时间的实践，我总结出了一些个人心得：</p>
+                    <ul>
+                        <li>保持好奇心，不断探索新的可能性</li>
+                        <li>从失败中学习，每次尝试都是成长的机会</li>
+                        <li>与志同道合的人交流，分享经验和想法</li>
+                        <li>记录自己的进步，回顾成长的轨迹</li>
+                    </ul>
+                    
+                    <h3>写在最后</h3>
+                    <p>感谢大家阅读我关于${topic}的分享。希望这篇博客能给你带来一些启发或者帮助。如果你有任何想法或者经验，欢迎在评论区留言，我很期待与你交流！</p>
+                `;
+            }
+            
+            function generateSocial(topic, keywords, tone, length) {
+                // 社交媒体内容通常较短
+                return `
+                    <p><strong>#${topic.replace(/\s+/g, '')} #${keywords.join(' #')}</strong></p>
+                    <p>📢 ${topic}最新动态！</p>
+                    <p>${tone}分享：${topic}正在改变我们的生活方式。无论你是刚刚了解还是已经深入研究，都不容错过这个重要趋势。</p>
+                    <p>💡 你知道吗？${keywords[0] || '最新研究'}表明，${topic}将在未来几年内获得更大的发展空间。</p>
+                    <p>👉 点击链接了解更多详情，不要忘记点赞和分享！</p>
+                `;
+            }
+            
+            function generateProduct(topic, keywords, tone, length) {
+                return `
+                    <h2>${topic} - 革新您的生活体验</h2>
+                    
+                    <p><strong>产品介绍：</strong>${topic}是一款专为现代生活设计的创新产品，融合了${keywords.join('、')}等多项先进技术，为用户带来前所未有的体验。</p>
+                    
+                    <h3>产品特点</h3>
+                    <ul>
+                        <li><strong>${keywords[0] || '卓越性能'}：</strong>采用最新技术，性能表现远超同类产品</li>
+                        <li><strong>${keywords[1] || '精致设计'}：</strong>精心打造的外观设计，彰显品质与品味</li>
+                        <li><strong>${keywords[2] || '实用功能'}：</strong>多种实用功能，满足您的各种需求</li>
+                        <li><strong>优质体验：</strong>从细节入手，为您提供${tone}的使用体验</li>
+                    </ul>
+                    
+                    <h3>为什么选择我们？</h3>
+                    <p>我们的${topic}不仅仅是一款产品，更是一种生活方式的升级。无论是工作还是生活，它都能为您带来便利和效率。现在购买，还可享受限时优惠和售后服务保障。</p>
+                    
+                    <p><strong>立即行动！</strong>抢先体验${topic}带来的全新可能，改变从现在开始。</p>
+                `;
+            }
+            
+            function generateEmail(topic, keywords, tone, length) {
+                const currentDate = new Date().toLocaleDateString();
+                
+                return `
+                    <p><strong>主题：${topic}</strong></p>
+                    <p>尊敬的客户/合作伙伴：</p>
+                    
+                    <p>您好！</p>
+                    
+                    <p>我是[您的姓名]，[您的公司/组织]的[您的职位]。非常高兴有机会就${topic}与您进行沟通。</p>
+                    
+                    <p>关于${keywords[0] || '我们的合作'}，我们有以下几点想法：</p>
+                    <ul>
+                        <li>${keywords[1] || '项目计划'}：我们已经制定了详细的计划，包括时间表、资源分配和预期成果</li>
+                        <li>${keywords[2] || '合作方式'}：我们建议采用灵活的合作模式，确保双方都能获得最大收益</li>
+                        <li>未来展望：通过此次合作，我们期待建立长期的合作关系，共同探索更多可能性</li>
+                    </ul>
+                    
+                    <p>如果您对以上内容有任何疑问或建议，请随时与我联系。我们非常期待您的回复和进一步的讨论。</p>
+                    
+                    <p>谢谢您的时间和关注！</p>
+                    
+                    <p>此致</p>
+                    <p>敬礼</p>
+                    
+                    <p>[您的姓名]<br>
+                    [您的职位]<br>
+                    [您的公司/组织]<br>
+                    [您的联系方式]</p>
+                    
+                    <p>${currentDate}</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
