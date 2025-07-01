@@ -1,0 +1,64 @@
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  /* 定义渐变色变量 */
+  --gradient-start: theme(colors.indigo.500, #6366F1);
+  /* 默认为 indigo-500 */
+  --gradient-end: theme(colors.pink.500, #EC4899);
+  /* 默认为 pink-500 */
+}
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    /* 可选：为暗黑模式定义不同的渐变色 */
+    /* --gradient-start: theme(colors.indigo.400, #818CF8); */
+    /* --gradient-end: theme(colors.pink.400, #F472B6); */
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  /* 推荐使用 Tailwind 配置的字体或更通用的字体栈 */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  -webkit-font-smoothing: antialiased;
+  /* 改善字体渲染 */
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 输入框聚焦时渐变边框的自定义样式 */
+.input-gradient-border-focus:focus {
+  border-color: transparent;
+  /* 聚焦时隐藏原始边框颜色 */
+  outline: none;
+  /* 移除默认的浏览器轮廓 */
+  /* 使用 border-image 实现渐变边框 */
+  border-width: 2px;
+  /* 必须设置边框宽度 */
+  border-style: solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+}
+
+/* 确保 Tailwind 的 Preflight/Reset 覆盖了基本元素的默认边距和内边距 */
+/* 如果没有，可以添加以下内容以确保一致性 */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  /* 继承父级字体 */
+  font-size: 100%;
+  /* 继承父级字体大小 */
+  line-height: inherit;
+  /* 继承父级行高 */
+  color: inherit;
+  /* 继承父级颜色 */
+  margin: 0;
+  /* 移除默认外边距 */
+  /* padding: 0;  Tailwind 通常会处理内边距，但如果需要完全重置，可以取消注释 */
+}
